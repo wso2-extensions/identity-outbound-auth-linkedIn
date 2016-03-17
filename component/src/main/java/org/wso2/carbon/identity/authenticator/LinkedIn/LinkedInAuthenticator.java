@@ -55,6 +55,11 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
 
     private static Log log = LogFactory.getLog(LinkedInAuthenticator.class);
 
+    /**
+     * chacke weather user can process or not
+     * @param request
+     * @return
+     */
     @Override
     public boolean canHandle(HttpServletRequest request) {
         if (log.isTraceEnabled()) {
@@ -332,6 +337,12 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
         return b.toString();
     }
 
+    /**
+     * get user information using access token
+     *
+     * @param token Access token
+     * @return mapped user information
+     */
     protected Map<String, Object> getUserClaims(OAuthClientResponse token) {
         try {
             String json = sendRequest(

@@ -32,6 +32,10 @@ public class LinkedInAuthenticatorServiceComponent {
 
     private static Log log = LogFactory.getLog(LinkedInAuthenticatorServiceComponent.class);
 
+    /**
+     *
+     * @param ctxt
+     */
     protected void activate(ComponentContext ctxt) {
         try {
             LinkedInAuthenticator authenticator = new LinkedInAuthenticator();
@@ -46,6 +50,10 @@ public class LinkedInAuthenticatorServiceComponent {
         }
     }
 
+    /**
+     *
+     * @param ctxt
+     */
     protected void deactivate(ComponentContext ctxt) {
         if (log.isDebugEnabled()) {
             log.debug("LinkedIn authenticator is deactivated");
