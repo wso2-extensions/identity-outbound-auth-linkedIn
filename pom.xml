@@ -107,12 +107,12 @@
         <dependency>
             <groupId>org.apache.oltu.oauth2</groupId>
             <artifactId>org.apache.oltu.oauth2.client</artifactId>
-            <version>0.31</version>
+            <version>${org.apache.oltu.oauth2.client}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.oltu.oauth2</groupId>
             <artifactId>org.apache.oltu.oauth2.common</artifactId>
-            <version>1.0.1</version>
+            <version>${org.apache.oltu.oauth2.common}</version>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon.identity</groupId>
@@ -324,5 +324,7 @@
         <org.wso2.securevault.version>1.0.0-wso2v2</org.wso2.securevault.version>
         <commons-lang.wso2.version>2.6.0.wso2v1</commons-lang.wso2.version>
         <encoder.wso2.version>1.2.0.wso2v1</encoder.wso2.version>
+        <org.apache.oltu.oauth2.client>0.31</org.apache.oltu.oauth2.client>
+        <org.apache.oltu.oauth2.common>1.0.1</org.apache.oltu.oauth2.common>
     </properties>
 </project>
