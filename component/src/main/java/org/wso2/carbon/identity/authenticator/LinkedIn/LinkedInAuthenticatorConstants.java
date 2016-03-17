@@ -27,7 +27,6 @@ public class LinkedInAuthenticatorConstants {
     public static final String LINKEDIN_CONNECTOR_NAME = "LinkedInOauth2OpenIDAuthenticator";
     public static final String QUERY_STRING = "scope=r_basicprofile%20r_emailaddress";
     public static final String LINKEDIN_OAUTH2_ACCESS_TOKEN_PARAMETER = "oauth2_access_token";
-
     public static final String LINKEDIN_LOGIN_TYPE = "linkedin";
     public static final String OAUTH2_GRANT_TYPE_CODE = "code";
     public static final String OAUTH2_PARAM_STATE = "state";

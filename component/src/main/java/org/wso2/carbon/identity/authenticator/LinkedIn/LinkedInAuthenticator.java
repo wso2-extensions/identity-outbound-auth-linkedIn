@@ -133,7 +133,6 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
      */
     @Override
     public List<Property> getConfigurationProperties() {
-
         List<Property> configProperties = new ArrayList<Property>();
 
         Property clientId = new Property();
@@ -168,7 +167,6 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
     protected void initiateAuthenticationRequest(HttpServletRequest request,
                                                  HttpServletResponse response, AuthenticationContext context)
             throws AuthenticationFailedException {
-
         try {
             Map<String, String> authenticatorProperties = context.getAuthenticatorProperties();
             if (authenticatorProperties != null) {
@@ -347,7 +345,6 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
             log.error(e);
         }
         return new HashMap<String, Object>();
-
     }
 
 }

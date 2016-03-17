@@ -19,7 +19,6 @@
 
 package org.wso2.carbon.identity.authenticator.LinkedIn.internal;
 
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.service.component.ComponentContext;
