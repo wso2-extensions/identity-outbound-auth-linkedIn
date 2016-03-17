@@ -1,4 +1,3 @@
-### identity-outbound-auth-linkedIn
 
 Welcome to the WSO2 Identity Server (IS) LinkedIn authenticator.
 
