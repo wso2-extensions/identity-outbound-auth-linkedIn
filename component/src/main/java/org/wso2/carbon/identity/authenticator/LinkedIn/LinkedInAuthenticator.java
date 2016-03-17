@@ -314,18 +314,18 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
                 .LINKEDIN_OAUTH2_ACCESS_TOKEN_PARAMETER + "=" + accessToken);
         HttpURLConnection urlConnection = (HttpURLConnection) obj.openConnection();
         urlConnection.setRequestMethod("GET");
-        BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-        StringBuilder b = new StringBuilder();
-        String inputLine = in.readLine();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+        StringBuilder stringBuilder = new StringBuilder();
+        String inputLine = bufferedReader.readLine();
         while (inputLine != null) {
-            b.append(inputLine).append("\n");
-            inputLine = in.readLine();
+            stringBuilder.append(inputLine).append("\n");
+            inputLine = bufferedReader.readLine();
         }
-        in.close();
+        bufferedReader.close();
         if (log.isDebugEnabled()) {
-            log.debug("response: " + b.toString());
+            log.debug("response: " + stringBuilder.toString());
         }
-        return b.toString();
+        return stringBuilder.toString();
     }
 
     /**
