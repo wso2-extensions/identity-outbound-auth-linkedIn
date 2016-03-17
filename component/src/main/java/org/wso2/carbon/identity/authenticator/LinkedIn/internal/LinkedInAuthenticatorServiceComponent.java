@@ -16,7 +16,6 @@
  *  under the License.
  *
  */
-
 package org.wso2.carbon.identity.authenticator.LinkedIn.internal;
 
 import org.apache.commons.logging.Log;
@@ -24,9 +23,7 @@ import org.apache.commons.logging.LogFactory;
 import org.osgi.service.component.ComponentContext;
 import org.wso2.carbon.identity.application.authentication.framework.ApplicationAuthenticator;
 import org.wso2.carbon.identity.authenticator.LinkedIn.LinkedInAuthenticator;
-
 import java.util.Hashtable;
-
 
 /**
  * @scr.component name="identity.application.authenticator.LinkedIn.component" immediate="true"
