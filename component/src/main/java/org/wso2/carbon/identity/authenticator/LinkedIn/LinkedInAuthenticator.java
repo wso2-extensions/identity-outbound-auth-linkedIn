@@ -25,7 +25,6 @@ import org.apache.oltu.oauth2.client.URLConnectionClient;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
 import org.apache.oltu.oauth2.client.response.OAuthAuthzResponse;
 import org.apache.oltu.oauth2.client.response.OAuthClientResponse;
-import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.apache.oltu.oauth2.common.utils.JSONUtils;
@@ -36,6 +35,7 @@ import org.wso2.carbon.identity.application.authentication.framework.model.Authe
 import org.wso2.carbon.identity.application.authenticator.oidc.OpenIDConnectAuthenticator;
 import org.wso2.carbon.identity.application.common.model.ClaimMapping;
 import org.wso2.carbon.identity.application.common.model.Property;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
@@ -56,9 +56,10 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
     private static Log log = LogFactory.getLog(LinkedInAuthenticator.class);
 
     /**
-     * chacke weather user can process or not
-     * @param request
-     * @return
+     * check weather user can process or not
+     *
+     * @param request the request
+     * @return true or false
      */
     @Override
     public boolean canHandle(HttpServletRequest request) {
@@ -66,12 +67,9 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
             log.trace("Inside LinkedinOAuth2Authenticator.canHandle()");
         }
         // Check commonauth got an OIDC response
-        if (request.getParameter(LinkedInAuthenticatorConstants.OAUTH2_GRANT_TYPE_CODE) != null
+        return request.getParameter(LinkedInAuthenticatorConstants.OAUTH2_GRANT_TYPE_CODE) != null
                 && request.getParameter(LinkedInAuthenticatorConstants.OAUTH2_PARAM_STATE) != null
-                && LinkedInAuthenticatorConstants.LINKEDIN_LOGIN_TYPE.equals(getLoginType(request))) {
-            return true;
-        }
-        return false;
+                && LinkedInAuthenticatorConstants.LINKEDIN_LOGIN_TYPE.equals(getLoginType(request));
     }
 
     private String getLoginType(HttpServletRequest request) {
@@ -136,7 +134,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
      */
     @Override
     public List<Property> getConfigurationProperties() {
-        List<Property> configProperties = new ArrayList<Property>();
+        List<Property> configProperties = new ArrayList<>();
 
         Property clientId = new Property();
         clientId.setName(LinkedInAuthenticatorConstants.CLIENT_ID);
@@ -161,9 +159,9 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
      * This is override because of query string values hard coded and input
      * values validations are not required.
      *
-     * @param request
-     * @param response
-     * @param context
+     * @param request  the http request
+     * @param response the http response
+     * @param context  the authentication context
      * @throws AuthenticationFailedException
      */
     @Override
@@ -198,12 +196,10 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
                 if (domain != null) {
                     loginPage = loginPage + "&fidp=" + domain;
                 }
-                if (queryString != null) {
-                    if (!queryString.startsWith("&")) {
-                        loginPage = loginPage + "&" + queryString;
-                    } else {
-                        loginPage = loginPage + queryString;
-                    }
+                if (!queryString.startsWith("&")) {
+                    loginPage = loginPage + "&" + queryString;
+                } else {
+                    loginPage = loginPage + queryString;
                 }
                 response.sendRedirect(loginPage);
             } else {
@@ -220,11 +216,10 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
             log.error("Exception while building authorization code request", e);
             throw new AuthenticationFailedException(e.getMessage(), e);
         }
-        return;
     }
 
     /**
-     * @return
+     * Get the CallBackURL
      */
     @Override
     protected String getCallbackUrl(Map<String, String> authenticatorProperties) {
@@ -234,9 +229,9 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
     /**
      * this method are overridden for extra claim request to linkedin end-point
      *
-     * @param request
-     * @param response
-     * @param context
+     * @param request  the http request
+     * @param response the http response
+     * @param context  the authentication context
      * @throws AuthenticationFailedException
      */
     @Override
@@ -269,7 +264,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
             }
             // create OAuth client that uses custom http client under the hood
             OAuthClient oAuthClient = new OAuthClient(new URLConnectionClient());
-            OAuthClientResponse oAuthResponse = null;
+            OAuthClientResponse oAuthResponse;
             try {
                 oAuthResponse = oAuthClient.accessToken(accessRequest);
             } catch (Exception e) {
@@ -297,9 +292,6 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
             } else {
                 throw new AuthenticationFailedException("Authentication Failed");
             }
-        } catch (OAuthProblemException e) {
-            log.error(e.getMessage(), e);
-            throw new AuthenticationFailedException(e.getMessage(), e);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new AuthenticationFailedException(e.getMessage(), e);
@@ -309,9 +301,8 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
     /**
      * extra request sending to linkedin userinfo end-point
      *
-     * @param url
-     * @param accessToken
-     * @return
+     * @param url         the request url
+     * @param accessToken the accesstoken
      * @throws IOException
      */
     protected String sendRequest(String url, String accessToken)
@@ -348,12 +339,11 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
             String json = sendRequest(
                     LinkedInAuthenticatorConstants.LINKEDIN_USERINFO_ENDPOINT,
                     token.getParam(LinkedInAuthenticatorConstants.ACCESS_TOKEN));
-            Map<String, Object> jsonObject = JSONUtils.parseJSON(json);
-            return jsonObject;
+            return JSONUtils.parseJSON(json);
         } catch (Exception e) {
             log.error(e);
         }
-        return new HashMap<String, Object>();
+        return new HashMap<>();
     }
 
 }

@@ -23,6 +23,7 @@ import org.apache.commons.logging.LogFactory;
 import org.osgi.service.component.ComponentContext;
 import org.wso2.carbon.identity.application.authentication.framework.ApplicationAuthenticator;
 import org.wso2.carbon.identity.authenticator.LinkedIn.LinkedInAuthenticator;
+
 import java.util.Hashtable;
 
 /**
@@ -33,8 +34,9 @@ public class LinkedInAuthenticatorServiceComponent {
     private static Log log = LogFactory.getLog(LinkedInAuthenticatorServiceComponent.class);
 
     /**
+     * activate custom authenticator
      *
-     * @param ctxt
+     * @param ctxt the Component Context
      */
     protected void activate(ComponentContext ctxt) {
         try {
@@ -51,8 +53,9 @@ public class LinkedInAuthenticatorServiceComponent {
     }
 
     /**
+     * deactivate custom authenticator
      *
-     * @param ctxt
+     * @param ctxt the Component Context
      */
     protected void deactivate(ComponentContext ctxt) {
         if (log.isDebugEnabled()) {
