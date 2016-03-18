@@ -278,9 +278,11 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
                 Map<String, Object> userClaims = getUserClaims(oAuthResponse);
                 if (userClaims != null && !userClaims.isEmpty()) {
                     authenticatedUserObj = AuthenticatedUser
-                            .createFederateAuthenticatedUserFromSubjectIdentifier(String.valueOf(userClaims.get("id")));
+                            .createFederateAuthenticatedUserFromSubjectIdentifier(String
+                                    .valueOf(userClaims.get(LinkedInAuthenticatorConstants.USER_ID)));
                     authenticatedUserObj
-                            .setAuthenticatedSubjectIdentifier(String.valueOf(userClaims.get("lastName")));
+                            .setAuthenticatedSubjectIdentifier(String.valueOf(userClaims
+                                    .get(LinkedInAuthenticatorConstants.LAST_NAME)));
                     claims = getSubjectAttributes(oAuthResponse, authenticatorProperties);
                     authenticatedUserObj.setUserAttributes(claims);
                     context.setSubject(authenticatedUserObj);
@@ -297,7 +299,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
     }
 
     /**
-     * extra request sending to linkedin userinfo end-point
+     * extra request sending to Linkedin userinfo end-point
      *
      * @param url         the request url
      * @param accessToken the accesstoken

@@ -23,8 +23,8 @@ public class LinkedInAuthenticatorConstants {
     public static final String LINKEDIN_OAUTH_ENDPOINT = "https://www.linkedin.com/uas/oauth2/authorization";
     public static final String LINKEDIN_TOKEN_ENDPOINT = "https://www.linkedin.com/uas/oauth2/accessToken";
     public static final String LINKEDIN_USERINFO_ENDPOINT = "https://api.linkedin.com/v1/people/~:(id,first-name,last-name,industry,headline,email-address)?format=json";
-    public static final String LINKEDIN_CONNECTOR_FRIENDLY_NAME = "linkedIn ";
-    public static final String LINKEDIN_CONNECTOR_NAME = "LinkedInOauth2OpenIDAuthenticator";
+    public static final String LINKEDIN_CONNECTOR_FRIENDLY_NAME = "LinkedIn ";
+    public static final String LINKEDIN_CONNECTOR_NAME = "LinkedIn Authenticator";
     public static final String QUERY_STRING = "scope=r_basicprofile%20r_emailaddress";
     public static final String LINKEDIN_OAUTH2_ACCESS_TOKEN_PARAMETER = "oauth2_access_token";
     public static final String LINKEDIN_LOGIN_TYPE = "linkedin";
@@ -36,5 +36,6 @@ public class LinkedInAuthenticatorConstants {
     public static final String OAUTH2_AUTHZ_URL = "OAuth2AuthzUrl";
     public static final String OAUTH2_TOKEN_URL = "OAUTH2TokenUrl";
     public static final String CALLBACK_URL = "https://localhost:9443/commonauth";
-    public static final String DOMAIN = "domain";
+    public static final String LAST_NAME = "lastName";
+    public static final String USER_ID = "id";
 }
