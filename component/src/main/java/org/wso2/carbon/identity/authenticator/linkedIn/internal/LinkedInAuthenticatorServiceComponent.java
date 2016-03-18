@@ -16,18 +16,19 @@
  *  under the License.
  *
  */
-package org.wso2.carbon.identity.authenticator.LinkedIn.internal;
+
+package org.wso2.carbon.identity.authenticator.linkedIn.internal;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.service.component.ComponentContext;
 import org.wso2.carbon.identity.application.authentication.framework.ApplicationAuthenticator;
-import org.wso2.carbon.identity.authenticator.LinkedIn.LinkedInAuthenticator;
+import org.wso2.carbon.identity.authenticator.linkedIn.LinkedInAuthenticator;
 
 import java.util.Hashtable;
 
 /**
- * @scr.component name="identity.application.authenticator.LinkedIn.component" immediate="true"
+ * @scr.component name="identity.application.authenticator.linkedIn.component" immediate="true"
  */
 public class LinkedInAuthenticatorServiceComponent {
 
@@ -45,10 +46,10 @@ public class LinkedInAuthenticatorServiceComponent {
             ctxt.getBundleContext().registerService(ApplicationAuthenticator.class.getName(),
                     authenticator, props);
             if (log.isDebugEnabled()) {
-                log.debug("LinkedIn authenticator is activated");
+                log.debug("linkedIn authenticator is activated");
             }
         } catch (Throwable e) {
-            log.fatal("Error while activating the LinkedIn authenticator ", e);
+            log.fatal("Error while activating the linkedIn authenticator ", e);
         }
     }
 
@@ -59,7 +60,7 @@ public class LinkedInAuthenticatorServiceComponent {
      */
     protected void deactivate(ComponentContext ctxt) {
         if (log.isDebugEnabled()) {
-            log.debug("LinkedIn authenticator is deactivated");
+            log.debug("linkedIn authenticator is deactivated");
         }
     }
 }
