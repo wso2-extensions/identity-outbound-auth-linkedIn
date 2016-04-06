@@ -58,7 +58,7 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Name>${project.artifactId}</Bundle-Name>
-                        <Private-Package>org.wso2.carbon.identity.authenticator.LinkedIn.internal
+                        <Private-Package>org.wso2.carbon.identity.authenticator.linkedIn.internal
                         </Private-Package>
                         <Import-Package>
                             org.apache.commons.logging.*; version="1.0.4",
@@ -71,7 +71,7 @@
                             *;resolution:=optional
                         </Import-Package>
                         <Export-Package>
-                            !org.wso2.carbon.identity.authenticator.LinkedIn.internal,
+                            !org.wso2.carbon.identity.authenticator.linkedIn.internal,
                             org.wso2.carbon.identity.authenticator.*
                         </Export-Package>
                     </instructions>
