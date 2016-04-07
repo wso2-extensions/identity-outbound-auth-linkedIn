@@ -27,6 +27,7 @@ import org.apache.oltu.oauth2.client.URLConnectionClient;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
 import org.apache.oltu.oauth2.client.response.OAuthAuthzResponse;
 import org.apache.oltu.oauth2.client.response.OAuthClientResponse;
+import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.apache.oltu.oauth2.common.utils.JSONUtils;
@@ -47,19 +48,18 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Authenticator of linkedIn
+ * Authenticator of linkedIn.
  */
 public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements FederatedApplicationAuthenticator {
 
     private static Log log = LogFactory.getLog(LinkedInAuthenticator.class);
 
     /**
-     * check weather user can process or not
+     * check weather user can process or not.
      *
      * @param request the request
      * @return true or false
@@ -75,14 +75,14 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
     }
 
     /**
-     * check whether the state contain login type or not
+     * check whether the state contain login type or not.
      *
      * @param request the request
      * @return login type
      */
     private Boolean getLoginType(HttpServletRequest request) {
         String state = request.getParameter(LinkedInAuthenticatorConstants.OAUTH2_PARAM_STATE);
-        if (!StringUtils.isEmpty(state)) {
+        if (StringUtils.isNotEmpty(state)) {
             return state.contains(LinkedInAuthenticatorConstants.LINKEDIN_LOGIN_TYPE);
         } else {
             return false;
@@ -122,7 +122,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
     }
 
     /**
-     * Get the friendly name of the Authenticator
+     * Get the friendly name of the Authenticator.
      */
     @Override
     public String getFriendlyName() {
@@ -130,7 +130,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
     }
 
     /**
-     * Get the name of the Authenticator
+     * Get the name of the Authenticator.
      */
     @Override
     public String getName() {
@@ -138,7 +138,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
     }
 
     /**
-     * Get Configuration Properties
+     * Get Configuration Properties.
      */
     @Override
     public List<Property> getConfigurationProperties() {
@@ -162,7 +162,6 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
         return configProperties;
     }
 
-
     /**
      * This is override because of query string values hard coded and input
      * values validations are not required.
@@ -173,8 +172,8 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
      * @throws AuthenticationFailedException
      */
     @Override
-    protected void initiateAuthenticationRequest(HttpServletRequest request,
-                                                 HttpServletResponse response, AuthenticationContext context)
+    protected void initiateAuthenticationRequest(HttpServletRequest request, HttpServletResponse response,
+                                                 AuthenticationContext context)
             throws AuthenticationFailedException {
         try {
             Map<String, String> authenticatorProperties = context.getAuthenticatorProperties();
@@ -182,12 +181,10 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
                 String clientId = authenticatorProperties.get(OIDCAuthenticatorConstants.CLIENT_ID);
                 String authorizationEP = getAuthorizationServerEndpoint(authenticatorProperties);
                 if (authorizationEP == null) {
-                    authorizationEP = authenticatorProperties
-                            .get(LinkedInAuthenticatorConstants.OAUTH2_AUTHZ_URL);
+                    authorizationEP = authenticatorProperties.get(LinkedInAuthenticatorConstants.OAUTH2_AUTHZ_URL);
                 }
                 String callbackurl = getCallbackUrl(authenticatorProperties);
-                String state = context.getContextIdentifier() + ","
-                        + LinkedInAuthenticatorConstants.LINKEDIN_LOGIN_TYPE;
+                String state = context.getContextIdentifier() + "," + LinkedInAuthenticatorConstants.LINKEDIN_LOGIN_TYPE;
                 state = getState(state, authenticatorProperties);
                 OAuthClientRequest authzRequest;
                 String queryString = LinkedInAuthenticatorConstants.QUERY_STRING;
@@ -208,8 +205,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
                 if (log.isDebugEnabled()) {
                     log.debug("Error while retrieving properties. Authenticator Properties cannot be null");
                 }
-                throw new AuthenticationFailedException(
-                        "Error while retrieving properties. Authenticator Properties cannot be null");
+                throw new AuthenticationFailedException(" Authenticator Properties cannot be null");
             }
         } catch (IOException | OAuthSystemException e) {
             throw new AuthenticationFailedException(e.getMessage(), e);
@@ -217,7 +213,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
     }
 
     /**
-     * Get the CallBackURL
+     * Get the CallBackURL.
      */
     @Override
     protected String getCallbackUrl(Map<String, String> authenticatorProperties) {
@@ -225,7 +221,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
     }
 
     /**
-     * this method are overridden for extra claim request to linkedin end-point
+     * This method are overridden for extra claim request to LinkedIn end-point.
      *
      * @param request  the http request
      * @param response the http response
@@ -233,8 +229,8 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
      * @throws AuthenticationFailedException
      */
     @Override
-    protected void processAuthenticationResponse(HttpServletRequest request,
-                                                 HttpServletResponse response, AuthenticationContext context)
+    protected void processAuthenticationResponse(HttpServletRequest request, HttpServletResponse response,
+                                                 AuthenticationContext context)
             throws AuthenticationFailedException {
         try {
             Map<String, String> authenticatorProperties = context.getAuthenticatorProperties();
@@ -254,59 +250,48 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
                         .setClientId(clientId).setClientSecret(clientSecret)
                         .setRedirectURI(callbackurl).setCode(code)
                         .buildBodyMessage();
+                // create OAuth client that uses custom http client under the hood
+                OAuthClient oAuthClient = new OAuthClient(new URLConnectionClient());
+                OAuthClientResponse oAuthResponse;
+                oAuthResponse = oAuthClient.accessToken(accessRequest);
+                AuthenticatedUser authenticatedUserObj;
+                String accessToken = oAuthResponse.getParam(LinkedInAuthenticatorConstants.ACCESS_TOKEN);
+                if (StringUtils.isNotEmpty(accessToken)) {
+                    Map<ClaimMapping, String> claims;
+                    Map<String, Object> userClaims = getUserClaims(oAuthResponse);
+                    if (userClaims != null && !userClaims.isEmpty()) {
+                        authenticatedUserObj = AuthenticatedUser.createFederateAuthenticatedUserFromSubjectIdentifier(
+                                String.valueOf(userClaims.get(LinkedInAuthenticatorConstants.USER_ID)));
+                        authenticatedUserObj.setAuthenticatedSubjectIdentifier(String.valueOf(userClaims
+                                .get(LinkedInAuthenticatorConstants.LAST_NAME)));
+                        claims = getSubjectAttributes(oAuthResponse, authenticatorProperties);
+                        authenticatedUserObj.setUserAttributes(claims);
+                        context.setSubject(authenticatedUserObj);
+                    } else {
+                        throw new AuthenticationFailedException("Selected user profile not found");
+                    }
+                } else {
+                    throw new AuthenticationFailedException("Authentication Failed access token not available");
+                }
             } catch (OAuthSystemException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Exception while building request for request access token", e);
                 }
                 throw new AuthenticationFailedException(e.getMessage(), e);
             }
-            // create OAuth client that uses custom http client under the hood
-            OAuthClient oAuthClient = new OAuthClient(new URLConnectionClient());
-            OAuthClientResponse oAuthResponse;
-            try {
-                oAuthResponse = oAuthClient.accessToken(accessRequest);
-            } catch (Exception e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Exception while requesting access token", e);
-                }
-                throw new AuthenticationFailedException(e.getMessage(), e);
-            }
-            AuthenticatedUser authenticatedUserObj;
-            String accessToken = oAuthResponse.getParam(LinkedInAuthenticatorConstants.ACCESS_TOKEN);
-            if (accessToken != null) {
-                Map<ClaimMapping, String> claims;
-                Map<String, Object> userClaims = getUserClaims(oAuthResponse);
-                if (userClaims != null && !userClaims.isEmpty()) {
-                    authenticatedUserObj = AuthenticatedUser
-                            .createFederateAuthenticatedUserFromSubjectIdentifier(String
-                                    .valueOf(userClaims.get(LinkedInAuthenticatorConstants.USER_ID)));
-                    authenticatedUserObj
-                            .setAuthenticatedSubjectIdentifier(String.valueOf(userClaims
-                                    .get(LinkedInAuthenticatorConstants.LAST_NAME)));
-                    claims = getSubjectAttributes(oAuthResponse, authenticatorProperties);
-                    authenticatedUserObj.setUserAttributes(claims);
-                    context.setSubject(authenticatedUserObj);
-                } else {
-                    throw new AuthenticationFailedException("Selected user profile found");
-                }
-            } else {
-                throw new AuthenticationFailedException("Authentication Failed");
-            }
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            throw new AuthenticationFailedException(e.getMessage(), e);
+        } catch (OAuthProblemException e) {
+            throw new AuthenticationFailedException("Authentication Failed in oauthresponse ", e);
         }
     }
 
     /**
-     * extra request sending to Linkedin userinfo end-point
+     * Extra request sending to LinkedIn userinfo end-point.
      *
      * @param url         the request url
      * @param accessToken the accesstoken
      * @throws IOException
      */
-    protected String sendRequest(String url, String accessToken)
-            throws IOException {
+    protected String sendRequest(String url, String accessToken) throws IOException {
         if (log.isDebugEnabled()) {
             log.debug("claim url: " + url + " <> accessToken : " + accessToken);
         }
@@ -329,21 +314,18 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
     }
 
     /**
-     * get user information using access token
+     * Get user information using access token.
      *
      * @param token Access token
      * @return mapped user information
      */
-    protected Map<String, Object> getUserClaims(OAuthClientResponse token) {
+    protected Map<String, Object> getUserClaims(OAuthClientResponse token) throws AuthenticationFailedException {
         try {
-            String json = sendRequest(
-                    LinkedInAuthenticatorConstants.LINKEDIN_USERINFO_ENDPOINT,
+            String json = sendRequest(LinkedInAuthenticatorConstants.LINKEDIN_USERINFO_ENDPOINT,
                     token.getParam(LinkedInAuthenticatorConstants.ACCESS_TOKEN));
             return JSONUtils.parseJSON(json);
-        } catch (Exception e) {
-            log.error(e);
+        } catch (IOException e) {
+            throw new AuthenticationFailedException("Authentication Failed while request user info ", e);
         }
-        return new HashMap<>();
     }
 }
-

@@ -35,30 +35,26 @@ public class LinkedInAuthenticatorServiceComponent {
     private static Log log = LogFactory.getLog(LinkedInAuthenticatorServiceComponent.class);
 
     /**
-     * activate custom authenticator
+     * activate custom authenticator.
      *
-     * @param ctxt the Component Context
+     * @param componentContext the Component Context
      */
-    protected void activate(ComponentContext ctxt) {
-        try {
+    protected void activate(ComponentContext componentContext) {
             LinkedInAuthenticator authenticator = new LinkedInAuthenticator();
-            Hashtable<String, String> props = new Hashtable<String, String>();
-            ctxt.getBundleContext().registerService(ApplicationAuthenticator.class.getName(),
+            Hashtable<String, String> props = new Hashtable<>();
+            componentContext.getBundleContext().registerService(ApplicationAuthenticator.class.getName(),
                     authenticator, props);
             if (log.isDebugEnabled()) {
                 log.debug("linkedIn authenticator is activated");
             }
-        } catch (Throwable e) {
-            log.fatal("Error while activating the linkedIn authenticator ", e);
-        }
     }
 
     /**
-     * deactivate custom authenticator
+     * deactivate custom authenticator.
      *
-     * @param ctxt the Component Context
+     * @param componentContext the Component Context
      */
-    protected void deactivate(ComponentContext ctxt) {
+    protected void deactivate(ComponentContext componentContext) {
         if (log.isDebugEnabled()) {
             log.debug("linkedIn authenticator is deactivated");
         }

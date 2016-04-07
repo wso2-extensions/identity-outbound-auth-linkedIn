@@ -14,17 +14,16 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
 -->
-
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.wso2.carbon.extension.identity.authenticator</groupId>
-        <artifactId>org.wso2.carbon.extension.identity.authenticator.LinkedIn</artifactId>
+        <artifactId>org.wso2.carbon.extension.identity.authenticator.linkedin</artifactId>
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>org.wso2.carbon.extension.identity.authenticator.LinkedIn.connector</artifactId>
+    <artifactId>org.wso2.carbon.extension.identity.authenticator.linkedin.connector</artifactId>
     <version>1.0.0</version>
     <packaging>bundle</packaging>
     <name>WSO2 Carbon - Authenticator Library For LinkedIn</name>
@@ -58,8 +57,7 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Name>${project.artifactId}</Bundle-Name>
-                        <Private-Package>org.wso2.carbon.identity.authenticator.linkedIn.internal
-                        </Private-Package>
+                        <Private-Package>org.wso2.carbon.identity.authenticator.linkedin.internal</Private-Package>
                         <Import-Package>
                             org.apache.commons.logging.*; version="1.0.4",
                             org.osgi.framework,
@@ -71,7 +69,7 @@
                             *;resolution:=optional
                         </Import-Package>
                         <Export-Package>
-                            !org.wso2.carbon.identity.authenticator.linkedIn.internal,
+                            !org.wso2.carbon.identity.authenticator.linkedin.internal,
                             org.wso2.carbon.identity.authenticator.*
                         </Export-Package>
                     </instructions>
