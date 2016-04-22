@@ -12,8 +12,8 @@ Tested Platform:
 
 Do the following:
 
-1. Navigate to identity-outbound-auth-linkedIn/org.wso2.carbon.identity.authenticator.linkedIn and build.
+1. Navigate to identity-outbound-auth-linkedIn/org.wso2.carbon.identity.authenticator.linkedin and build.
 
-2. Place org.wso2.carbon.identity.authenticator jar into <IS_HOME>/repository/components/dropins.
+2. Place org.wso2.carbon.identity.authenticator.linkedin.connector jar into <IS_HOME>/repository/components/dropins.
 
 3. Start the IS server and create Identity provider and service provider in IS via the IS console.

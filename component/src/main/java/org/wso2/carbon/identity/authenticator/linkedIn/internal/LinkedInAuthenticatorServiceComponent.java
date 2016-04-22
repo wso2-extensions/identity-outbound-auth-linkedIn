@@ -16,50 +16,47 @@
  *  under the License.
  *
  */
-package org.wso2.carbon.identity.authenticator.LinkedIn.internal;
+
+package org.wso2.carbon.identity.authenticator.linkedIn.internal;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.service.component.ComponentContext;
 import org.wso2.carbon.identity.application.authentication.framework.ApplicationAuthenticator;
-import org.wso2.carbon.identity.authenticator.LinkedIn.LinkedInAuthenticator;
+import org.wso2.carbon.identity.authenticator.linkedIn.LinkedInAuthenticator;
 
 import java.util.Hashtable;
 
 /**
- * @scr.component name="identity.application.authenticator.LinkedIn.component" immediate="true"
+ * @scr.component name="identity.application.authenticator.linkedIn.component" immediate="true"
  */
 public class LinkedInAuthenticatorServiceComponent {
 
     private static Log log = LogFactory.getLog(LinkedInAuthenticatorServiceComponent.class);
 
     /**
-     * activate custom authenticator
+     * activate custom authenticator.
      *
-     * @param ctxt the Component Context
+     * @param componentContext the Component Context
      */
-    protected void activate(ComponentContext ctxt) {
-        try {
+    protected void activate(ComponentContext componentContext) {
             LinkedInAuthenticator authenticator = new LinkedInAuthenticator();
-            Hashtable<String, String> props = new Hashtable<String, String>();
-            ctxt.getBundleContext().registerService(ApplicationAuthenticator.class.getName(),
+            Hashtable<String, String> props = new Hashtable<>();
+            componentContext.getBundleContext().registerService(ApplicationAuthenticator.class.getName(),
                     authenticator, props);
             if (log.isDebugEnabled()) {
-                log.debug("LinkedIn authenticator is activated");
+                log.debug("linkedIn authenticator is activated");
             }
-        } catch (Throwable e) {
-            log.fatal("Error while activating the LinkedIn authenticator ", e);
-        }
     }
 
     /**
-     * deactivate custom authenticator
+     * deactivate custom authenticator.
      *
-     * @param ctxt the Component Context
+     * @param componentContext the Component Context
      */
-    protected void deactivate(ComponentContext ctxt) {
+    protected void deactivate(ComponentContext componentContext) {
         if (log.isDebugEnabled()) {
-            log.debug("LinkedIn authenticator is deactivated");
+            log.debug("linkedIn authenticator is deactivated");
         }
     }
 }
