@@ -149,6 +149,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
         clientId.setDisplayName(LinkedInAuthenticatorConstants.CLIENT_ID);
         clientId.setRequired(true);
         clientId.setDescription("Enter Linkedin IDP client identifier value");
+        clientId.setDisplayOrder(0);
         configProperties.add(clientId);
 
         Property clientSecret = new Property();
@@ -157,7 +158,16 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
         clientSecret.setRequired(true);
         clientSecret.setConfidential(true);
         clientSecret.setDescription("Enter Linkedin IDP client secret value");
+        clientSecret.setDisplayOrder(1);
         configProperties.add(clientSecret);
+
+        Property callbackUrl = new Property();
+        callbackUrl.setDisplayName("Callback URL");
+        callbackUrl.setName(LinkedInAuthenticatorConstants.CALLBACK_URL);
+        callbackUrl.setDescription("Enter value corresponding to callback url.");
+        callbackUrl.setRequired(true);
+        callbackUrl.setDisplayOrder(2);
+        configProperties.add(callbackUrl);
 
         return configProperties;
     }
@@ -217,7 +227,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
      */
     @Override
     protected String getCallbackUrl(Map<String, String> authenticatorProperties) {
-        return LinkedInAuthenticatorConstants.CALLBACK_URL;
+        return authenticatorProperties.get(LinkedInAuthenticatorConstants.CALLBACK_URL);
     }
 
     /**
