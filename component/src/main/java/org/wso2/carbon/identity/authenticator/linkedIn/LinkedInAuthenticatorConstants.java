@@ -35,7 +35,7 @@ public class LinkedInAuthenticatorConstants {
     public static final String CLIENT_SECRET = "Client Secret";
     public static final String OAUTH2_AUTHZ_URL = "OAuth2AuthzUrl";
     public static final String OAUTH2_TOKEN_URL = "OAUTH2TokenUrl";
-    public static final String CALLBACK_URL = "https://localhost:9443/commonauth";
+    public static final String CALLBACK_URL = "callbackUrl";
     public static final String LAST_NAME = "lastName";
     public static final String USER_ID = "id";
 }
