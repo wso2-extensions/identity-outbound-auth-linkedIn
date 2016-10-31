@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.wso2.carbon.extension.identity.authenticator</groupId>
         <artifactId>org.wso2.carbon.extension.identity.authenticator.linkedin</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>org.wso2.carbon.extension.identity.authenticator.linkedin.feature</artifactId>
     <packaging>pom</packaging>
