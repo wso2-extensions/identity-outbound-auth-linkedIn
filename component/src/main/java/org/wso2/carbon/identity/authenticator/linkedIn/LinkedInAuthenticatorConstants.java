@@ -38,4 +38,5 @@ public class LinkedInAuthenticatorConstants {
     public static final String CALLBACK_URL = "callbackUrl";
     public static final String LAST_NAME = "lastName";
     public static final String USER_ID = "id";
+    public static final String CLAIM_DIALECT_URI = "http://wso2.org/linkedin/claims";
 }
