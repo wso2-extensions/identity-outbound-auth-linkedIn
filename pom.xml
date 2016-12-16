@@ -136,9 +136,10 @@
     <scm>
         <connection>scm:git:https://github.com/wso2-extensions/identity-outbound-auth-linkedIn.git</connection>
         <url>https://github.com/wso2-extensions/identity-outbound-auth-linkedIn.git</url>
-        <developerConnection>scm:git:https://github.com/wso2-extensions/identity-outbound-auth-linkedIn.git
+        <developerConnection>
+            scm:git:https://github.com/wso2-extensions/identity-outbound-auth-linkedIn.git
         </developerConnection>
-        <tag>org.wso2.carbon.extension.identity.authenticator.linkedin-1.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
     <build>
         <extensions>
