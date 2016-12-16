@@ -39,6 +39,7 @@ import org.wso2.carbon.identity.application.authenticator.oidc.OIDCAuthenticator
 import org.wso2.carbon.identity.application.authenticator.oidc.OpenIDConnectAuthenticator;
 import org.wso2.carbon.identity.application.common.model.ClaimMapping;
 import org.wso2.carbon.identity.application.common.model.Property;
+import org.wso2.carbon.identity.core.util.IdentityUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,6 +51,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Authenticator of linkedIn.
@@ -267,14 +270,16 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
                 AuthenticatedUser authenticatedUserObj;
                 String accessToken = oAuthResponse.getParam(LinkedInAuthenticatorConstants.ACCESS_TOKEN);
                 if (StringUtils.isNotEmpty(accessToken)) {
-                    Map<ClaimMapping, String> claims;
-                    Map<String, Object> userClaims = getUserClaims(oAuthResponse);
-                    if (userClaims != null && !userClaims.isEmpty()) {
+                    Map<ClaimMapping, String> claims = getSubjectAttributes(oAuthResponse, authenticatorProperties);
+                    if (claims != null && !claims.isEmpty()) {
+                        String userIDURI = LinkedInAuthenticatorConstants.CLAIM_DIALECT_URI + "/"
+                                + LinkedInAuthenticatorConstants.USER_ID;
+                        String lastNameURI = LinkedInAuthenticatorConstants.CLAIM_DIALECT_URI + "/"
+                                + LinkedInAuthenticatorConstants.LAST_NAME;
                         authenticatedUserObj = AuthenticatedUser.createFederateAuthenticatedUserFromSubjectIdentifier(
-                                String.valueOf(userClaims.get(LinkedInAuthenticatorConstants.USER_ID)));
-                        authenticatedUserObj.setAuthenticatedSubjectIdentifier(String.valueOf(userClaims
-                                .get(LinkedInAuthenticatorConstants.LAST_NAME)));
-                        claims = getSubjectAttributes(oAuthResponse, authenticatorProperties);
+                                String.valueOf(claims.get(ClaimMapping.build(userIDURI, userIDURI, (String)null, false))));
+                        authenticatedUserObj.setAuthenticatedSubjectIdentifier(String.valueOf(claims.get(
+                                ClaimMapping.build(lastNameURI, lastNameURI, (String) null, false))));
                         authenticatedUserObj.setUserAttributes(claims);
                         context.setSubject(authenticatedUserObj);
                     } else {
@@ -337,5 +342,47 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
         } catch (IOException e) {
             throw new AuthenticationFailedException("Authentication Failed while request user info ", e);
         }
+    }
+
+    /**
+     * Get the Linkedin specific claim dialect URI.
+     * @return Claim dialect URI.
+     */
+    @Override
+    public String getClaimDialectURI() {
+        return LinkedInAuthenticatorConstants.CLAIM_DIALECT_URI;
+    }
+
+    @Override
+    protected Map<ClaimMapping, String> getSubjectAttributes(OAuthClientResponse token, Map<String, String> authenticatorProperties) {
+        HashMap claims = new HashMap();
+        try {
+            String accessToken = token.getParam("access_token");
+            String url = this.getUserInfoEndpoint(token, authenticatorProperties);
+            String json = this.sendRequest(url, accessToken);
+            if(StringUtils.isBlank(json)) {
+                if(log.isDebugEnabled()) {
+                    log.debug("Unable to fetch user claims. Proceeding without user claims");
+                }
+                return claims;
+            }
+
+            Map jsonObject = JSONUtils.parseJSON(json);
+            Iterator i$ = jsonObject.entrySet().iterator();
+
+            while(i$.hasNext()) {
+                Map.Entry data = (Map.Entry)i$.next();
+                String key = (String)data.getKey();
+                claims.put(ClaimMapping.build(LinkedInAuthenticatorConstants.CLAIM_DIALECT_URI + "/" + key,
+                                LinkedInAuthenticatorConstants.CLAIM_DIALECT_URI + "/" + key, (String)null, false),
+                        jsonObject.get(key).toString());
+                if(log.isDebugEnabled() && IdentityUtil.isTokenLoggable("UserClaims")) {
+                    log.debug("Adding claims from end-point data mapping : " + key + " - " + jsonObject.get(key).toString());
+                }
+            }
+        } catch (Exception e) {
+            log.error("Error occurred while accessing user info endpoint", e);
+        }
+        return claims;
     }
 }
