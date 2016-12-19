@@ -25,7 +25,7 @@
     </parent>
     <groupId>org.wso2.carbon.extension.identity.authenticator.outbound.linkedin</groupId>
     <artifactId>identity-outbound-auth-linkedIn</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>WSO2 Carbon Extension - LinkedIn Pom</name>
     <url>http://wso2.org</url>
@@ -139,7 +139,7 @@
         <developerConnection>
             scm:git:https://github.com/wso2-extensions/identity-outbound-auth-linkedIn.git
         </developerConnection>
-        <tag>identity-outbound-auth-linkedIn-1.0.2</tag>
+        <tag>HEAD</tag>
     </scm>
     <build>
         <extensions>
