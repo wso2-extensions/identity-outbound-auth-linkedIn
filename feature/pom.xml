@@ -29,7 +29,7 @@
     <description>This feature contains extension feature for LinkedIn</description>
     <dependencies>
         <dependency>
-            <groupId>org.wso2.carbon.extension.identity.authenticator</groupId>
+            <groupId>org.wso2.carbon.extension.identity.authenticator.outbound.linkedin</groupId>
             <artifactId>org.wso2.carbon.extension.identity.authenticator.linkedin.connector</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -59,7 +59,7 @@
                             </adviceFile>
                             <bundles>
                                 <bundleDef>
-                                    org.wso2.carbon.extension.identity.authenticator:org.wso2.carbon.extension.identity.authenticator.linkedin.connector
+                                    org.wso2.carbon.extension.identity.authenticator.outbound.linkedin:org.wso2.carbon.extension.identity.authenticator.linkedin.connector
                                 </bundleDef>
                             </bundles>
                         </configuration>
