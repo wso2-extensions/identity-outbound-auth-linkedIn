@@ -92,9 +92,9 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
             String errorDescription = request.getParameter
                     (LinkedInAuthenticatorConstants.OAUTH2_PARAM_ERROR_DESCRIPTION);
             String state = request.getParameter(LinkedInAuthenticatorConstants.OAUTH2_PARAM_STATE);
-            errorMessage.append("error: ").append(error)
-                    .append(", error_description: ").append(errorDescription)
-                    .append(", state: ").append(state);
+            errorMessage.append(LinkedInAuthenticatorConstants.ERROR).append(error)
+                    .append(LinkedInAuthenticatorConstants.ERROR_DESCRIPTION).append(errorDescription)
+                    .append(LinkedInAuthenticatorConstants.STATE).append(state);
             if (log.isDebugEnabled()) {
                 log.debug("Failed to authenticate via LinkedIn when click on cancel without providing credentials. " +
                         errorMessage.toString());

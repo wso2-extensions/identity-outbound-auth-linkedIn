@@ -41,4 +41,7 @@ public class LinkedInAuthenticatorConstants {
     public static final String CLAIM_DIALECT_URI = "http://wso2.org/linkedin/claims";
     public static final String OAUTH2_PARAM_ERROR = "error";
     public static final String OAUTH2_PARAM_ERROR_DESCRIPTION = "error_description";
+    public static final String ERROR = "error: ";
+    public static final String ERROR_DESCRIPTION = ", error_description: ";
+    public static final String STATE = ", state: ";
 }
