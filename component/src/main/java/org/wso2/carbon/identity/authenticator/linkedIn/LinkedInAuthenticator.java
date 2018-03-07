@@ -34,6 +34,7 @@ import org.apache.oltu.oauth2.common.utils.JSONUtils;
 import org.wso2.carbon.identity.application.authentication.framework.FederatedApplicationAuthenticator;
 import org.wso2.carbon.identity.application.authentication.framework.context.AuthenticationContext;
 import org.wso2.carbon.identity.application.authentication.framework.exception.AuthenticationFailedException;
+import org.wso2.carbon.identity.application.authentication.framework.exception.InvalidCredentialsException;
 import org.wso2.carbon.identity.application.authentication.framework.model.AuthenticatedUser;
 import org.wso2.carbon.identity.application.authenticator.oidc.OIDCAuthenticatorConstants;
 import org.wso2.carbon.identity.application.authenticator.oidc.OpenIDConnectAuthenticator;
@@ -74,7 +75,32 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
         }
         return request.getParameter(LinkedInAuthenticatorConstants.OAUTH2_GRANT_TYPE_CODE) != null
                 && request.getParameter(LinkedInAuthenticatorConstants.OAUTH2_PARAM_STATE) != null
-                && (getLoginType(request));
+                && (getLoginType(request))
+                || request.getParameter(LinkedInAuthenticatorConstants.OAUTH2_PARAM_ERROR) != null;
+    }
+
+    /**
+     * Handle error response when click on cancel without providing credentials.
+     *
+     * @param request httpServletRequest
+     * @throws InvalidCredentialsException
+     */
+    private void handleErrorResponse(HttpServletRequest request) throws InvalidCredentialsException {
+        if (request.getParameter(LinkedInAuthenticatorConstants.OAUTH2_PARAM_ERROR) != null) {
+            StringBuilder errorMessage = new StringBuilder();
+            String error = request.getParameter(LinkedInAuthenticatorConstants.OAUTH2_PARAM_ERROR);
+            String errorDescription = request.getParameter
+                    (LinkedInAuthenticatorConstants.OAUTH2_PARAM_ERROR_DESCRIPTION);
+            String state = request.getParameter(LinkedInAuthenticatorConstants.OAUTH2_PARAM_STATE);
+            errorMessage.append("error: ").append(error)
+                    .append(", error_description: ").append(errorDescription)
+                    .append(", state: ").append(state);
+            if (log.isDebugEnabled()) {
+                log.debug("Failed to authenticate via LinkedIn when click on cancel without providing credentials. " +
+                        errorMessage.toString());
+            }
+            throw new InvalidCredentialsException(errorMessage.toString());
+        }
     }
 
     /**
@@ -246,6 +272,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
                                                  AuthenticationContext context)
             throws AuthenticationFailedException {
         try {
+            handleErrorResponse(request);
             Map<String, String> authenticatorProperties = context.getAuthenticatorProperties();
             String clientId = authenticatorProperties.get(OIDCAuthenticatorConstants.CLIENT_ID);
             String clientSecret = authenticatorProperties.get(OIDCAuthenticatorConstants.CLIENT_SECRET);
