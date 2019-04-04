@@ -19,6 +19,7 @@
 
 package org.wso2.carbon.identity.authenticator.linkedIn;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,6 +32,8 @@ import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.apache.oltu.oauth2.common.utils.JSONUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.wso2.carbon.identity.application.authentication.framework.FederatedApplicationAuthenticator;
 import org.wso2.carbon.identity.application.authentication.framework.context.AuthenticationContext;
 import org.wso2.carbon.identity.application.authentication.framework.exception.AuthenticationFailedException;
@@ -385,31 +388,59 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
         HashMap claims = new HashMap();
         try {
             String accessToken = token.getParam("access_token");
-            String url = this.getUserInfoEndpoint(token, authenticatorProperties);
-            String json = this.sendRequest(url, accessToken);
-            if(StringUtils.isBlank(json)) {
-                if(log.isDebugEnabled()) {
-                    log.debug("Unable to fetch user claims. Proceeding without user claims");
-                }
+            String urlProfile = this.getUserInfoEndpoint(token, authenticatorProperties);
+            String jsonProfile = this.sendRequest(urlProfile, accessToken);
+            String jsonEmailAddress = this.sendRequest(LinkedInAuthenticatorConstants.LINKEDIN_USERINFO_EMAILADDRESS, accessToken);
+
+            if (StringUtils.isBlank(jsonProfile) || StringUtils.isBlank(jsonEmailAddress)) {
                 return claims;
             }
-
-            Map jsonObject = JSONUtils.parseJSON(json);
-            Iterator i$ = jsonObject.entrySet().iterator();
-
-            while(i$.hasNext()) {
-                Map.Entry data = (Map.Entry)i$.next();
-                String key = (String)data.getKey();
-                claims.put(ClaimMapping.build(LinkedInAuthenticatorConstants.CLAIM_DIALECT_URI + "/" + key,
-                                LinkedInAuthenticatorConstants.CLAIM_DIALECT_URI + "/" + key, (String)null, false),
-                        jsonObject.get(key).toString());
-                if(log.isDebugEnabled() && IdentityUtil.isTokenLoggable("UserClaims")) {
-                    log.debug("Adding claims from end-point data mapping : " + key + " - " + jsonObject.get(key).toString());
+            JSONObject jsonObject = new JSONObject(jsonProfile);
+            Iterator<String> parents = jsonObject.keys();
+            while (parents.hasNext()) {
+                StringBuilder preferredLocale = new StringBuilder();
+                String field = parents.next();
+                Object object = jsonObject.get(field);
+                if (object instanceof JSONObject) {
+                    addAttributes((JSONObject) object, claims, field, preferredLocale);
+                } else if (object instanceof String) {
+                    claims.put(ClaimMapping.build(LinkedInAuthenticatorConstants.CLAIM_DIALECT_URI + "/" + field, LinkedInAuthenticatorConstants.CLAIM_DIALECT_URI + "/" + field, null, false), object);
+                }
+            }
+            JSONObject jsonEmailObject = new JSONObject(jsonEmailAddress);
+            Iterator iterator = jsonEmailObject.keys();
+            while (iterator.hasNext()) {
+                String key = (String) iterator.next();
+                JSONArray elements = (JSONArray) jsonEmailObject.get(key);
+                for (int i = 0; i < elements.length(); i++) {
+                    JSONObject object = elements.getJSONObject(i);
+                    JSONObject emailObject = (JSONObject) object.get(LinkedInAuthenticatorConstants.HANDLE);
+                    String value = (String) emailObject.get(LinkedInAuthenticatorConstants.EMAIL_ADDRESS);
+                    claims.put(ClaimMapping.build(LinkedInAuthenticatorConstants.CLAIM_DIALECT_URI + "/" + LinkedInAuthenticatorConstants.EMAIL_ADDRESS, LinkedInAuthenticatorConstants.CLAIM_DIALECT_URI + "/" + LinkedInAuthenticatorConstants.EMAIL_ADDRESS, null, false), value);
                 }
             }
         } catch (Exception e) {
             log.error("Error occurred while accessing user info endpoint", e);
         }
         return claims;
+    }
+
+    private void addAttributes(JSONObject jsonObject, Map claims, String field, StringBuilder preferredLocale) {
+        Iterator<String> children = jsonObject.keys();
+        while (children.hasNext()) {
+            String key = children.next();
+            Object object = jsonObject.get(key);
+            if (object instanceof String) {
+                if (key.equals(LinkedInAuthenticatorConstants.LANGUAGE)) {
+                    preferredLocale.insert(0, (String) jsonObject.get(key));
+                } else if (key.equals(LinkedInAuthenticatorConstants.COUNTRY)) {
+                    preferredLocale.append("_" + jsonObject.get(key));
+                } else {
+                    claims.put(ClaimMapping.build(LinkedInAuthenticatorConstants.CLAIM_DIALECT_URI + "/" + field, LinkedInAuthenticatorConstants.CLAIM_DIALECT_URI + "/" + field, null, false), jsonObject.get(key));
+                }
+            } else {
+                addAttributes((JSONObject) object, claims, field, preferredLocale);
+            }
+        }
     }
 }
