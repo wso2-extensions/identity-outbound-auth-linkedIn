@@ -22,7 +22,7 @@ package org.wso2.carbon.identity.authenticator.linkedIn;
 public class LinkedInAuthenticatorConstants {
     public static final String LINKEDIN_OAUTH_ENDPOINT = "https://www.linkedin.com/oauth/v2/authorization";
     public static final String LINKEDIN_TOKEN_ENDPOINT = "https://www.linkedin.com/oauth/v2/accessToken";
-    public static final String LINKEDIN_USERINFO_ENDPOINT = "https://api.linkedin.com/v2/me?projection=(firstName,lastName)";
+    public static final String LINKEDIN_USERINFO_ENDPOINT = "https://api.linkedin.com/v2/me?projection=(id, firstName,lastName)";
     public static final String LINKEDIN_USERINFO_EMAILADDRESS = "https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))";
     public static final String LINKEDIN_CONNECTOR_FRIENDLY_NAME = "LinkedIn Authenticator";
     public static final String LINKEDIN_CONNECTOR_NAME = "LinkedIn";
