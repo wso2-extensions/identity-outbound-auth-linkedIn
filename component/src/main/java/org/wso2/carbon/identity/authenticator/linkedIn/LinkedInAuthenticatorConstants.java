@@ -20,12 +20,27 @@
 package org.wso2.carbon.identity.authenticator.linkedIn;
 
 public class LinkedInAuthenticatorConstants {
+
+    @Deprecated
     public static final String LINKEDIN_OAUTH_ENDPOINT = "https://www.linkedin.com/uas/oauth2/authorization";
+    public static final String LINKEDIN_OAUTH_ENDPOINT_V2 = "https://www.linkedin.com/oauth/v2/authorization";
+
+    @Deprecated
     public static final String LINKEDIN_TOKEN_ENDPOINT = "https://www.linkedin.com/uas/oauth2/accessToken";
+    public static final String LINKEDIN_TOKEN_ENDPOINT_V2 = "https://www.linkedin.com/oauth/v2/accessToken";
+
+    @Deprecated
     public static final String LINKEDIN_USERINFO_ENDPOINT = "https://api.linkedin.com/v1/people/~:(id,first-name,last-name,industry,headline,email-address)?format=json";
+    public static final String LINKEDIN_USERINFO_ENDPOINT_V2 = "https://api.linkedin.com/v2/me";
+
+    public static final String LINKEDIN_EMAIL_ENDPOINT = "https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))";
+
     public static final String LINKEDIN_CONNECTOR_FRIENDLY_NAME = "LinkedIn Authenticator";
     public static final String LINKEDIN_CONNECTOR_NAME = "LinkedIn";
+
+    @Deprecated
     public static final String QUERY_STRING = "scope=r_basicprofile%20r_emailaddress";
+    public static final String SCOPE = "r_liteprofile r_emailaddress";
     public static final String LINKEDIN_OAUTH2_ACCESS_TOKEN_PARAMETER = "oauth2_access_token";
     public static final String LINKEDIN_LOGIN_TYPE = "linkedin";
     public static final String OAUTH2_GRANT_TYPE_CODE = "code";
@@ -44,4 +59,10 @@ public class LinkedInAuthenticatorConstants {
     public static final String ERROR = "error: ";
     public static final String ERROR_DESCRIPTION = ", error_description: ";
     public static final String STATE = ", state: ";
+    public static final String USERINFO_ENDPOINT = "userinfo_endpoint";
+    public static final String EMAIL_ENDPOINT = "email_endpoint";
+    public static final String EMAIL_ADDRESS_CLAIM = "http://wso2.org/linkedin/claims/emailAddress";
+    public static final String ELEMENTS_ATTRIBUTE = "elements";
+    public static final String HANDLE_ATTRIBUTE = "handle~";
+    public static final String EMAIL_ADDRESS_ATTRIBUTE = "emailAddress";
 }
