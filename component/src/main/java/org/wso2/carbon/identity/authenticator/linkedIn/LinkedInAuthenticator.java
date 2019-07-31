@@ -87,7 +87,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
             log.debug(LinkedInAuthenticatorConstants.OAUTH2_PARAM_ERROR + ":" + errorParam);
         }
 
-        return grantType != null && stateParam != null && loginTypePresent || errorParam != null;
+        return StringUtils.isNotEmpty(grantType) && stateParam != null && loginTypePresent || errorParam != null;
     }
 
     /**
@@ -146,7 +146,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
             authorizationEP = LinkedInAuthenticatorConstants.LINKEDIN_OAUTH_ENDPOINT_V2;
         }
 
-        return authorizationEP != null ? authorizationEP : LinkedInAuthenticatorConstants.LINKEDIN_OAUTH_ENDPOINT_V2;
+        return StringUtils.isNotEmpty(authorizationEP) ? authorizationEP : LinkedInAuthenticatorConstants.LINKEDIN_OAUTH_ENDPOINT_V2;
     }
 
     /**
@@ -162,7 +162,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
             tokenEndPoint = LinkedInAuthenticatorConstants.LINKEDIN_TOKEN_ENDPOINT_V2;
         }
 
-        return tokenEndPoint != null ? tokenEndPoint : LinkedInAuthenticatorConstants.LINKEDIN_TOKEN_ENDPOINT_V2;
+        return StringUtils.isNotEmpty(tokenEndPoint) ? tokenEndPoint : LinkedInAuthenticatorConstants.LINKEDIN_TOKEN_ENDPOINT_V2;
     }
 
     /**
@@ -178,7 +178,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
             userinfoEndpoint = LinkedInAuthenticatorConstants.LINKEDIN_USERINFO_ENDPOINT_V2;
         }
 
-        return userinfoEndpoint != null ? userinfoEndpoint : LinkedInAuthenticatorConstants
+        return StringUtils.isNotEmpty(userinfoEndpoint) ? userinfoEndpoint : LinkedInAuthenticatorConstants
                 .LINKEDIN_USERINFO_ENDPOINT_V2;
     }
 
@@ -498,6 +498,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
             emailEndpoint = LinkedInAuthenticatorConstants.LINKEDIN_EMAIL_ENDPOINT;
         }
 
-        return emailEndpoint != null ? emailEndpoint : LinkedInAuthenticatorConstants.LINKEDIN_EMAIL_ENDPOINT;
+        return StringUtils.isNotEmpty(emailEndpoint) ? emailEndpoint : LinkedInAuthenticatorConstants
+                .LINKEDIN_EMAIL_ENDPOINT;
     }
 }
