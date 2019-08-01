@@ -22,14 +22,18 @@ package org.wso2.carbon.identity.authenticator.linkedIn.internal;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.service.component.ComponentContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.wso2.carbon.identity.application.authentication.framework.ApplicationAuthenticator;
 import org.wso2.carbon.identity.authenticator.linkedIn.LinkedInAuthenticator;
 
 import java.util.Hashtable;
 
-/**
- * @scr.component name="identity.application.authenticator.linkedIn.component" immediate="true"
- */
+@Component(
+        name = "identity.application.authenticator.linkedIn.component",
+        immediate = true
+)
 public class LinkedInAuthenticatorServiceComponent {
 
     private static Log log = LogFactory.getLog(LinkedInAuthenticatorServiceComponent.class);
@@ -39,14 +43,16 @@ public class LinkedInAuthenticatorServiceComponent {
      *
      * @param componentContext the Component Context
      */
+    @Activate
     protected void activate(ComponentContext componentContext) {
-            LinkedInAuthenticator authenticator = new LinkedInAuthenticator();
-            Hashtable<String, String> props = new Hashtable<>();
-            componentContext.getBundleContext().registerService(ApplicationAuthenticator.class.getName(),
-                    authenticator, props);
-            if (log.isDebugEnabled()) {
-                log.debug("linkedIn authenticator is activated");
-            }
+
+        LinkedInAuthenticator authenticator = new LinkedInAuthenticator();
+        Hashtable<String, String> props = new Hashtable<>();
+        componentContext.getBundleContext().registerService(ApplicationAuthenticator.class.getName(),
+                authenticator, props);
+        if (log.isDebugEnabled()) {
+            log.debug("linkedIn authenticator is activated.");
+        }
     }
 
     /**
@@ -54,9 +60,11 @@ public class LinkedInAuthenticatorServiceComponent {
      *
      * @param componentContext the Component Context
      */
+    @Deactivate
     protected void deactivate(ComponentContext componentContext) {
+
         if (log.isDebugEnabled()) {
-            log.debug("linkedIn authenticator is deactivated");
+            log.debug("linkedIn authenticator is deactivated.");
         }
     }
 }
