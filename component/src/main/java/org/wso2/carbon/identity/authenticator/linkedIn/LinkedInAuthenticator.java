@@ -146,7 +146,8 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
             authorizationEP = LinkedInAuthenticatorConstants.LINKEDIN_OAUTH_ENDPOINT_V2;
         }
 
-        return StringUtils.isNotEmpty(authorizationEP) ? authorizationEP : LinkedInAuthenticatorConstants.LINKEDIN_OAUTH_ENDPOINT_V2;
+        return StringUtils.isNotEmpty(authorizationEP) ? authorizationEP : LinkedInAuthenticatorConstants
+                .LINKEDIN_OAUTH_ENDPOINT_V2;
     }
 
     /**
@@ -162,7 +163,8 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
             tokenEndPoint = LinkedInAuthenticatorConstants.LINKEDIN_TOKEN_ENDPOINT_V2;
         }
 
-        return StringUtils.isNotEmpty(tokenEndPoint) ? tokenEndPoint : LinkedInAuthenticatorConstants.LINKEDIN_TOKEN_ENDPOINT_V2;
+        return StringUtils.isNotEmpty(tokenEndPoint) ? tokenEndPoint : LinkedInAuthenticatorConstants
+                .LINKEDIN_TOKEN_ENDPOINT_V2;
     }
 
     /**
