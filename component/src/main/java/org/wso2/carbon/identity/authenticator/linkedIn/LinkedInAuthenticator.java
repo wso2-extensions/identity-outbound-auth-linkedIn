@@ -62,7 +62,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements FederatedApplicationAuthenticator {
 
-    private static Log log = LogFactory.getLog(LinkedInAuthenticator.class);
+    private static final Log log = LogFactory.getLog(LinkedInAuthenticator.class);
 
     /**
      * check whether user can process or not.

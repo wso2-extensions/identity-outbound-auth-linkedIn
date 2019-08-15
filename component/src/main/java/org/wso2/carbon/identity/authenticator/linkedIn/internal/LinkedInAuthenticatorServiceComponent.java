@@ -36,7 +36,7 @@ import java.util.Hashtable;
 )
 public class LinkedInAuthenticatorServiceComponent {
 
-    private static Log log = LogFactory.getLog(LinkedInAuthenticatorServiceComponent.class);
+    private static final Log log = LogFactory.getLog(LinkedInAuthenticatorServiceComponent.class);
 
     /**
      * activate custom authenticator.
