@@ -347,19 +347,15 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
                     throw new AuthenticationFailedException("Selected user profile not found.");
                 }
 
-                String userIDURI = LinkedInAuthenticatorConstants.CLAIM_DIALECT_URI + "/"
-                        + LinkedInAuthenticatorConstants.USER_ID;
-                String lastNameURI = LinkedInAuthenticatorConstants.CLAIM_DIALECT_URI + "/"
-                        + LinkedInAuthenticatorConstants.LAST_NAME;
+                // Set email as the authenticated subject identifier and create a federated user.
+                ClaimMapping emailClaimMapping = ClaimMapping.build(LinkedInAuthenticatorConstants.EMAIL_ADDRESS_CLAIM,
+                        LinkedInAuthenticatorConstants.EMAIL_ADDRESS_CLAIM, null, false);
+                AuthenticatedUser authenticatedUser = AuthenticatedUser
+                        .createFederateAuthenticatedUserFromSubjectIdentifier(claims.get(emailClaimMapping));
+                authenticatedUser.setUserAttributes(claims);
 
-                AuthenticatedUser authenticatedUserObj = AuthenticatedUser
-                        .createFederateAuthenticatedUserFromSubjectIdentifier(
-                                String.valueOf(claims.get(ClaimMapping.build(userIDURI, userIDURI, null, false))));
-                authenticatedUserObj
-                        .setAuthenticatedSubjectIdentifier(
-                                String.valueOf(claims.get(ClaimMapping.build(lastNameURI, lastNameURI, null, false))));
-                authenticatedUserObj.setUserAttributes(claims);
-                context.setSubject(authenticatedUserObj);
+                // Set the above user as the subject and conclude the flow.
+                context.setSubject(authenticatedUser);
             } catch (OAuthSystemException e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Exception while building request for request access token", e);

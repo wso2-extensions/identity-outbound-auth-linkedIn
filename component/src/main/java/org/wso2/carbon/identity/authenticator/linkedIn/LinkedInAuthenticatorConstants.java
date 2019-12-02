@@ -41,7 +41,6 @@ public class LinkedInAuthenticatorConstants {
     @Deprecated
     public static final String QUERY_STRING = "scope=r_basicprofile%20r_emailaddress";
     public static final String SCOPE = "r_liteprofile r_emailaddress";
-    public static final String LINKEDIN_OAUTH2_ACCESS_TOKEN_PARAMETER = "oauth2_access_token";
     public static final String LINKEDIN_LOGIN_TYPE = "linkedin";
     public static final String OAUTH2_GRANT_TYPE_CODE = "code";
     public static final String OAUTH2_PARAM_STATE = "state";
@@ -51,8 +50,6 @@ public class LinkedInAuthenticatorConstants {
     public static final String OAUTH2_AUTHZ_URL = "OAuth2AuthzUrl";
     public static final String OAUTH2_TOKEN_URL = "OAUTH2TokenUrl";
     public static final String CALLBACK_URL = "callbackUrl";
-    public static final String LAST_NAME = "lastName";
-    public static final String USER_ID = "id";
     public static final String CLAIM_DIALECT_URI = "http://wso2.org/linkedin/claims";
     public static final String OAUTH2_PARAM_ERROR = "error";
     public static final String OAUTH2_PARAM_ERROR_DESCRIPTION = "error_description";
