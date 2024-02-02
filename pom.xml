@@ -276,5 +276,7 @@
         <org.apache.oltu.oauth2.client>0.31</org.apache.oltu.oauth2.client>
         <org.apache.oltu.oauth2.common>1.0.1</org.apache.oltu.oauth2.common>
         <apache.felix.scr.ds.annotations.version>1.2.4</apache.felix.scr.ds.annotations.version>
+
+        <carbon.identity.package.import.version.range>[5.0.0,8.0.0)</carbon.identity.package.import.version.range>
     </properties>
 </project>
