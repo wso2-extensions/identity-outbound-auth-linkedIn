@@ -20,6 +20,7 @@
         <groupId>org.wso2.carbon.extension.identity.authenticator.outbound.linkedin</groupId>
         <artifactId>identity-outbound-auth-linkedIn</artifactId>
         <version>2.0.3-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
     <artifactId>org.wso2.carbon.extension.identity.authenticator.linkedin.oidc.feature</artifactId>
     <packaging>pom</packaging>
