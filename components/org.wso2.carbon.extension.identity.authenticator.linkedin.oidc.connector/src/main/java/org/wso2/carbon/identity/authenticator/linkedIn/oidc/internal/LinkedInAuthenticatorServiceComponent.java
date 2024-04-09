@@ -17,7 +17,7 @@
  *
  */
 
-package org.wso2.carbon.identity.authenticator.linkedIn.v2.internal;
+package org.wso2.carbon.identity.authenticator.linkedIn.oidc.internal;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,17 +26,17 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.wso2.carbon.identity.application.authentication.framework.ApplicationAuthenticator;
-import org.wso2.carbon.identity.authenticator.linkedIn.v2.LinkedInV2Authenticator;
+import org.wso2.carbon.identity.authenticator.linkedIn.oidc.LinkedInAuthenticator;
 
 import java.util.Hashtable;
 
 @Component(
-        name = "identity.application.authenticator.linkedIn.v2.component",
+        name = "identity.application.authenticator.linkedIn.oidc.component",
         immediate = true
 )
-public class LinkedInV2AuthenticatorServiceComponent {
+public class LinkedInAuthenticatorServiceComponent {
 
-    private static final Log log = LogFactory.getLog(LinkedInV2AuthenticatorServiceComponent.class);
+    private static final Log log = LogFactory.getLog(LinkedInAuthenticatorServiceComponent.class);
 
     /**
      * activate custom authenticator.
@@ -46,12 +46,12 @@ public class LinkedInV2AuthenticatorServiceComponent {
     @Activate
     protected void activate(ComponentContext componentContext) {
 
-        LinkedInV2Authenticator authenticator = new LinkedInV2Authenticator();
+        LinkedInAuthenticator authenticator = new LinkedInAuthenticator();
         Hashtable<String, String> props = new Hashtable<>();
         componentContext.getBundleContext().registerService(ApplicationAuthenticator.class.getName(),
                 authenticator, props);
         if (log.isDebugEnabled()) {
-            log.debug("linkedIn v2 authenticator is activated.");
+            log.debug("linkedIn OIDC authenticator is activated.");
         }
     }
 
@@ -64,7 +64,7 @@ public class LinkedInV2AuthenticatorServiceComponent {
     protected void deactivate(ComponentContext componentContext) {
 
         if (log.isDebugEnabled()) {
-            log.debug("linkedIn v2 authenticator is deactivated.");
+            log.debug("linkedIn OIDC authenticator is deactivated.");
         }
     }
 }

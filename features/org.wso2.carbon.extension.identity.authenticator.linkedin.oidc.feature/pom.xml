@@ -21,15 +21,15 @@
         <artifactId>identity-outbound-auth-linkedIn</artifactId>
         <version>2.0.3-SNAPSHOT</version>
     </parent>
-    <artifactId>org.wso2.carbon.extension.identity.authenticator.linkedin.v2.feature</artifactId>
+    <artifactId>feature</artifactId>
     <packaging>pom</packaging>
-    <name>WSO2 Carbon - identity LinkedIn V2 Feature</name>
+    <name>WSO2 Carbon - identity LinkedIn OIDC Feature</name>
     <url>http://wso2.org</url>
-    <description>This feature contains extension feature for LinkedIn V2</description>
+    <description>This feature contains extension feature for LinkedIn OIDC</description>
     <dependencies>
         <dependency>
             <groupId>org.wso2.carbon.extension.identity.authenticator.outbound.linkedin</groupId>
-            <artifactId>org.wso2.carbon.extension.identity.authenticator.linkedin.v2.connector</artifactId>
+            <artifactId>org.wso2.carbon.extension.identity.authenticator.linkedin.oidc.connector</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
@@ -47,7 +47,7 @@
                             <goal>p2-feature-gen</goal>
                         </goals>
                         <configuration>
-                            <id>org.wso2.carbon.extension.identity.authenticator.linkedin.v2.connector</id>
+                            <id>org.wso2.carbon.extension.identity.authenticator.linkedin.oidc.connector</id>
                             <propertiesFile>feature.properties</propertiesFile>
                             <adviceFile>
                                 <properties>
@@ -57,7 +57,7 @@
                             </adviceFile>
                             <bundles>
                                 <bundleDef>
-                                    org.wso2.carbon.extension.identity.authenticator.outbound.linkedin:org.wso2.carbon.extension.identity.authenticator.linkedin.v2.connector
+                                    org.wso2.carbon.extension.identity.authenticator.outbound.linkedin:org.wso2.carbon.extension.identity.authenticator.linkedin.oidc.connector
                                 </bundleDef>
                             </bundles>
                         </configuration>

@@ -24,9 +24,9 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>org.wso2.carbon.extension.identity.authenticator.linkedin.v2.connector</artifactId>
+    <artifactId>org.wso2.carbon.extension.identity.authenticator.linkedin.oidc.connector</artifactId>
     <packaging>bundle</packaging>
-    <name>WSO2 Carbon - Authenticator Library For LinkedIn V2</name>
+    <name>WSO2 Carbon - Authenticator Library For LinkedIn OIDC</name>
     <url>http://wso2.org</url>
 
     <build>
@@ -53,7 +53,7 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Name>${project.artifactId}</Bundle-Name>
-                        <Private-Package>org.wso2.carbon.identity.authenticator.linkedIn.v2.internal</Private-Package>
+                        <Private-Package>org.wso2.carbon.identity.authenticator.linkedIn.oidc.internal</Private-Package>
                         <Import-Package>
                             org.apache.commons.logging.*; version="1.0.4",
                             org.osgi.framework,
@@ -66,7 +66,7 @@
                             *;resolution:=optional
                         </Import-Package>
                         <Export-Package>
-                            !org.wso2.carbon.identity.authenticator.linkedIn.v2.internal,
+                            !org.wso2.carbon.identity.authenticator.linkedIn.oidc.internal,
                             org.wso2.carbon.identity.authenticator.*
                         </Export-Package>
                     </instructions>

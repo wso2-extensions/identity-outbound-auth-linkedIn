@@ -17,15 +17,15 @@
  *
  */
 
-package org.wso2.carbon.identity.authenticator.linkedIn.v2;
+package org.wso2.carbon.identity.authenticator.linkedIn.oidc;
 
-public class LinkedInV2AuthenticatorConstants {
+public class LinkedInAuthenticatorConstants {
 
     public static final String LINKEDIN_V2_OAUTH_ENDPOINT = "https://www.linkedin.com/oauth/v2/authorization";
     public static final String LINKEDIN_V2_TOKEN_ENDPOINT = "https://www.linkedin.com/oauth/v2/accessToken";
     public static final String LINKEDIN_V2_USERINFO_ENDPOINT = "https://api.linkedin.com/v2/userinfo";
-    public static final String LINKEDIN_V2_CONNECTOR_FRIENDLY_NAME = "LinkedInV2 Authenticator";
-    public static final String LINKEDIN_V2_CONNECTOR_NAME = "LinkedInV2";
+    public static final String LINKEDIN_OIDC_CONNECTOR_FRIENDLY_NAME = "LinkedInOIDC Authenticator";
+    public static final String LINKEDIN_OIDC_CONNECTOR_NAME = "LinkedInOIDC";
     public static final String SCOPE = "openid profile email";
     public static final String LINKEDIN_LOGIN_TYPE = "linkedin";
     public static final String OAUTH2_GRANT_TYPE_CODE = "code";

@@ -40,9 +40,9 @@
             </activation>
             <modules>
                 <module>components/org.wso2.carbon.extension.identity.authenticator.linkedin.connector</module>
-                <module>components/org.wso2.carbon.extension.identity.authenticator.linkedin.v2.connector</module>
+                <module>components/org.wso2.carbon.extension.identity.authenticator.linkedin.oidc.connector</module>
                 <module>features/org.wso2.carbon.extension.identity.authenticator.linkedin.feature</module>
-                <module>features/org.wso2.carbon.extension.identity.authenticator.linkedin.v2.feature</module>
+                <module>features/org.wso2.carbon.extension.identity.authenticator.linkedin.oidc.feature</module>
             </modules>
         </profile>
     </profiles>

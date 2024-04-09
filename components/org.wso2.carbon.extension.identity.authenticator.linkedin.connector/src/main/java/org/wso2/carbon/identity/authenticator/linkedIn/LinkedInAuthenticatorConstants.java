@@ -31,12 +31,12 @@ public class LinkedInAuthenticatorConstants {
 
     @Deprecated
     public static final String LINKEDIN_USERINFO_ENDPOINT = "https://api.linkedin.com/v1/people/~:(id,first-name,last-name,industry,headline,email-address)?format=json";
-    public static final String LINKEDIN_USERINFO_ENDPOINT_V2 = "https://api.linkedin.com/v2/userinfo";
+    public static final String LINKEDIN_USERINFO_ENDPOINT_V2 = "https://api.linkedin.com/v2/me";
 
     public static final String LINKEDIN_EMAIL_ENDPOINT = "https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))";
 
-    public static final String LINKEDIN_CONNECTOR_FRIENDLY_NAME = "LinkedInSOOOO";
-    public static final String LINKEDIN_CONNECTOR_NAME = "LinkedInSOS";
+    public static final String LINKEDIN_CONNECTOR_FRIENDLY_NAME = "LinkedIn Authenticator";
+    public static final String LINKEDIN_CONNECTOR_NAME = "LinkedIn";
 
     @Deprecated
     public static final String QUERY_STRING = "scope=r_basicprofile%20r_emailaddress";
