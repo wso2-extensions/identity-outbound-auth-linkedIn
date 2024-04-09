@@ -1,21 +1,21 @@
 /*
- *  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2024, WSO2 LLC. (http://www.wso2.com).
  *
- *  WSO2 Inc. licenses this file to you under the Apache License,
- *  Version 2.0 (the "License"); you may not use this file except
- *  in compliance with the License.
- *  You may obtain a copy of the License at
+ * WSO2 LLC. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *  http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing,
- *  software distributed under the License is distributed on an
- *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- *  KIND, either express or implied.  See the License for the
- *  specific language governing permissions and limitations
- *  under the License.
- *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
+
 package org.wso2.carbon.identity.authenticator.linkedIn.oidc;
 
 import org.apache.commons.lang.StringUtils;
@@ -53,7 +53,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Authenticator of linkedIn V2.
+ * Authenticator of linkedIn OIDC.
  * API version: V2.0
  * API Document: https://learn.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/sign-in-with-linkedin-v2
  */
@@ -76,7 +76,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator {
         boolean loginTypePresent = isLoginTypeLinkedIn(request);
 
         if (log.isDebugEnabled()) {
-            log.debug("Inside LinkedinOAuth2Authenticator.canHandle()");
+            log.debug("Inside LinkedinOIDCAuthenticator.canHandle()");
             log.debug("Parameter values: ");
             log.debug("Is login type Linkedin: " + loginTypePresent);
             log.debug(LinkedInAuthenticatorConstants.OAUTH2_GRANT_TYPE_CODE + ":" + grantType);
@@ -107,7 +107,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator {
                     .append(LinkedInAuthenticatorConstants.STATE)
                     .append(state);
             if (log.isDebugEnabled()) {
-                log.debug("Failed to authenticate via LinkedIn when click on cancel without providing credentials. "
+                log.debug("Failed to authenticate via LinkedIn OIDC when click on cancel without providing credentials. "
                         + errorMessage.toString());
             }
             throw new InvalidCredentialsException(errorMessage.toString());
