@@ -35,12 +35,12 @@ public class LinkedInAuthenticatorConstants {
 
     public static final String LINKEDIN_EMAIL_ENDPOINT = "https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))";
 
-    public static final String LINKEDIN_CONNECTOR_FRIENDLY_NAME = "LinkedIn Authenticator";
-    public static final String LINKEDIN_CONNECTOR_NAME = "LinkedIn";
+    public static final String LINKEDIN_CONNECTOR_FRIENDLY_NAME = "LinkedInSOOOO";
+    public static final String LINKEDIN_CONNECTOR_NAME = "LinkedInSOS";
 
     @Deprecated
     public static final String QUERY_STRING = "scope=r_basicprofile%20r_emailaddress";
-    public static final String SCOPE = "openid profile email";
+    public static final String SCOPE = "r_liteprofile r_emailaddress";
     public static final String LINKEDIN_LOGIN_TYPE = "linkedin";
     public static final String OAUTH2_GRANT_TYPE_CODE = "code";
     public static final String OAUTH2_PARAM_STATE = "state";
@@ -58,7 +58,7 @@ public class LinkedInAuthenticatorConstants {
     public static final String STATE = ", state: ";
     public static final String USERINFO_ENDPOINT = "userinfo_endpoint";
     public static final String EMAIL_ENDPOINT = "email_endpoint";
-    public static final String EMAIL_ADDRESS_CLAIM = "http://wso2.org/linkedin/claims/email";
+    public static final String EMAIL_ADDRESS_CLAIM = "http://wso2.org/linkedin/claims/emailAddress";
     public static final String ELEMENTS_ATTRIBUTE = "elements";
     public static final String HANDLE_ATTRIBUTE = "handle~";
     public static final String EMAIL_ADDRESS_ATTRIBUTE = "emailAddress";

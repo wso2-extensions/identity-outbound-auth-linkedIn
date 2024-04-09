@@ -434,9 +434,9 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
             String accessToken = token.getParam(LinkedInAuthenticatorConstants.ACCESS_TOKEN);
 
             // Retrieve user's email address.
-//            String emailEndpointURL = this.getEmailEndpointURL(authenticatorProperties);
-//            String emailJSON = this.sendRequest(emailEndpointURL, accessToken);
-//            Map<String, Object> emailJSONObject = JSONUtils.parseJSON(emailJSON);
+            String emailEndpointURL = this.getEmailEndpointURL(authenticatorProperties);
+            String emailJSON = this.sendRequest(emailEndpointURL, accessToken);
+            Map<String, Object> emailJSONObject = JSONUtils.parseJSON(emailJSON);
 
             // Following will be the JSON response from the email endpoint.
             // {
@@ -445,13 +445,13 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
             //     "emailAddress": "hsimpson@linkedin.com"
             //   }
             // }
-//            JSONObject elements = (JSONObject)((Object[])emailJSONObject
-//                    .get(LinkedInAuthenticatorConstants.ELEMENTS_ATTRIBUTE))[0];
-//            JSONObject handle = elements.getJSONObject(LinkedInAuthenticatorConstants.HANDLE_ATTRIBUTE);
-//
-//            ClaimMapping emailClaimMapping = ClaimMapping.build(LinkedInAuthenticatorConstants.EMAIL_ADDRESS_CLAIM,
-//                    LinkedInAuthenticatorConstants.EMAIL_ADDRESS_CLAIM, null, false);
-//            claims.put(emailClaimMapping, handle.getString(LinkedInAuthenticatorConstants.EMAIL_ADDRESS_ATTRIBUTE));
+            JSONObject elements = (JSONObject)((Object[])emailJSONObject
+                    .get(LinkedInAuthenticatorConstants.ELEMENTS_ATTRIBUTE))[0];
+            JSONObject handle = elements.getJSONObject(LinkedInAuthenticatorConstants.HANDLE_ATTRIBUTE);
+
+            ClaimMapping emailClaimMapping = ClaimMapping.build(LinkedInAuthenticatorConstants.EMAIL_ADDRESS_CLAIM,
+                    LinkedInAuthenticatorConstants.EMAIL_ADDRESS_CLAIM, null, false);
+            claims.put(emailClaimMapping, handle.getString(LinkedInAuthenticatorConstants.EMAIL_ADDRESS_ATTRIBUTE));
 
             // Retrieve user's other attributes.
             String userInfoEndpoint = this.getUserInfoEndpoint(token, authenticatorProperties);

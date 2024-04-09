@@ -29,7 +29,7 @@
     <artifactId>identity-outbound-auth-linkedIn</artifactId>
     <version>2.0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>WSO2 Carbon Extension - LinkedIn Pom</name>
+    <name>WSO2 Carbon Extension - LinkedIn Authenticator Feature Aggregator Module</name>
     <url>http://wso2.org</url>
 
     <profiles>
@@ -39,8 +39,10 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <module>component</module>
-                <module>feature</module>
+                <module>components/org.wso2.carbon.extension.identity.authenticator.linkedin.connector</module>
+                <module>components/org.wso2.carbon.extension.identity.authenticator.linkedin.v2.connector</module>
+                <module>features/org.wso2.carbon.extension.identity.authenticator.linkedin.feature</module>
+                <module>features/org.wso2.carbon.extension.identity.authenticator.linkedin.v2.feature</module>
             </modules>
         </profile>
     </profiles>
