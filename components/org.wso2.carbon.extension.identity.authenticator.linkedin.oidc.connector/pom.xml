@@ -139,7 +139,7 @@
                         <Bundle-Name>${project.artifactId}</Bundle-Name>
                         <Private-Package>org.wso2.carbon.identity.authenticator.linkedIn.oidc.internal</Private-Package>
                         <Import-Package>
-                            org.apache.commons.logging.*; version="1.0.4",
+                            org.apache.commons.logging.*; version="${org.apache.commons.logging.version}",
                             org.osgi.framework,
                             org.osgi.service.component.*,
                             org.wso2.carbon.identity.application.authentication.framework.*;version="${carbon.identity.package.import.version.range}",

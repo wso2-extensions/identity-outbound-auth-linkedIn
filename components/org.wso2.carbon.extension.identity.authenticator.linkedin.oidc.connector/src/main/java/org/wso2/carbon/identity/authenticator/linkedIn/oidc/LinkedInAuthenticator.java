@@ -403,6 +403,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator {
      */
     @Override
     public String getClaimDialectURI() {
+
         return LinkedInAuthenticatorConstants.CLAIM_DIALECT_URI;
     }
 
