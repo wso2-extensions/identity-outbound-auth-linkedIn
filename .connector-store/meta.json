@@ -1,0 +1,12 @@
+{
+    "name": "LinkedIn",
+    "owner": "WSO2",
+    "category": "Federated authenticator",
+    "documentationUrl": "https://github.com/wso2-extensions/identity-outbound-auth-linkedIn/blob/master/docs/README.md",
+    "description": "The LinkedIn authenticator allows you to authenticate users using LinkedIn through the WSO2 Identity Server.",
+    "status": "Active",
+    "labels": [
+        "SocialLogin"
+    ],
+    "releases": []
+}
