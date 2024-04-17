@@ -107,8 +107,8 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator {
                     .append(LinkedInAuthenticatorConstants.STATE)
                     .append(state);
             if (log.isDebugEnabled()) {
-                log.debug("Failed to authenticate via LinkedIn OIDC when click on cancel without providing credentials. "
-                        + errorMessage.toString());
+                log.debug("Failed to authenticate via LinkedIn OIDC when click on cancel without providing " +
+                        "credentials. " + errorMessage);
             }
             throw new InvalidCredentialsException(errorMessage.toString());
         }
@@ -186,6 +186,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator {
      */
     @Override
     protected boolean requiredIDToken(Map<String, String> authenticatorProperties) {
+
         return false;
     }
 
@@ -194,6 +195,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator {
      */
     @Override
     public String getFriendlyName() {
+
         return LinkedInAuthenticatorConstants.LINKEDIN_OIDC_CONNECTOR_FRIENDLY_NAME;
     }
 
@@ -202,6 +204,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator {
      */
     @Override
     public String getName() {
+
         return LinkedInAuthenticatorConstants.LINKEDIN_OIDC_CONNECTOR_NAME;
     }
 
@@ -243,7 +246,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator {
     }
 
     /**
-     * This is override because of query string values hard coded and input
+     * This is overridden because query string values are hard coded and input
      * values validations are not required.
      *
      * @param request  the http request
@@ -292,7 +295,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator {
     }
 
     /**
-     * This method are overridden for extra claim request to LinkedIn end-point.
+     * This method is overridden for extra claim request to LinkedIn end-point.
      *
      * @param request  the http request
      * @param response the http response
