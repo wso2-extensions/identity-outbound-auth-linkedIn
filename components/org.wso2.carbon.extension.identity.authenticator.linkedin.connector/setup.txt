@@ -12,7 +12,7 @@ Tested Platform:
 
 Do the following:
 
-1. Navigate to identity-outbound-auth-linkedIn/org.wso2.carbon.identity.authenticator.linkedin and build.
+1. Navigate to identity-outbound-auth-linkedIn/components/org.wso2.carbon.extension.identity.authenticator.linkedin.connector and build.
 
 2. Place org.wso2.carbon.identity.authenticator.linkedin.connector jar into <IS_HOME>/repository/components/dropins.
 

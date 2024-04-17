@@ -1,22 +1,22 @@
 /*
- *  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2024, WSO2 LLC. (http://www.wso2.com).
  *
- *  WSO2 Inc. licenses this file to you under the Apache License,
- *  Version 2.0 (the "License"); you may not use this file except
- *  in compliance with the License.
- *  You may obtain a copy of the License at
+ * WSO2 LLC. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *  http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing,
- *  software distributed under the License is distributed on an
- *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- *  KIND, either express or implied.  See the License for the
- *  specific language governing permissions and limitations
- *  under the License.
- *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
-package org.wso2.carbon.identity.authenticator.linkedIn;
+
+package org.wso2.carbon.identity.authenticator.linkedIn.oidc;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -30,8 +30,6 @@ import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.apache.oltu.oauth2.common.utils.JSONUtils;
-import org.json.JSONObject;
-import org.wso2.carbon.identity.application.authentication.framework.FederatedApplicationAuthenticator;
 import org.wso2.carbon.identity.application.authentication.framework.context.AuthenticationContext;
 import org.wso2.carbon.identity.application.authentication.framework.exception.AuthenticationFailedException;
 import org.wso2.carbon.identity.application.authentication.framework.exception.InvalidCredentialsException;
@@ -48,7 +46,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,11 +53,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Authenticator of linkedIn.
+ * Authenticator of linkedIn OIDC.
  * API version: V2.0
- * API Document: https://docs.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/sign-in-with-linkedin
+ * API Document: https://learn.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/sign-in-with-linkedin-v2
  */
-public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements FederatedApplicationAuthenticator {
+public class LinkedInAuthenticator extends OpenIDConnectAuthenticator {
 
     private static final Log log = LogFactory.getLog(LinkedInAuthenticator.class);
 
@@ -79,7 +76,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
         boolean loginTypePresent = isLoginTypeLinkedIn(request);
 
         if (log.isDebugEnabled()) {
-            log.debug("Inside LinkedinOAuth2Authenticator.canHandle()");
+            log.debug("Inside LinkedinOIDCAuthenticator.canHandle()");
             log.debug("Parameter values: ");
             log.debug("Is login type Linkedin: " + loginTypePresent);
             log.debug(LinkedInAuthenticatorConstants.OAUTH2_GRANT_TYPE_CODE + ":" + grantType);
@@ -110,8 +107,8 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
                     .append(LinkedInAuthenticatorConstants.STATE)
                     .append(state);
             if (log.isDebugEnabled()) {
-                log.debug("Failed to authenticate via LinkedIn when click on cancel without providing credentials. "
-                        + errorMessage.toString());
+                log.debug("Failed to authenticate via LinkedIn OIDC when click on cancel without providing " +
+                        "credentials. " + errorMessage);
             }
             throw new InvalidCredentialsException(errorMessage.toString());
         }
@@ -143,11 +140,11 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
         if (authenticatorProperties != null) {
             authorizationEP = authenticatorProperties.get(LinkedInAuthenticatorConstants.OAUTH2_AUTHZ_URL);
         } else {
-            authorizationEP = LinkedInAuthenticatorConstants.LINKEDIN_OAUTH_ENDPOINT_V2;
+            authorizationEP = LinkedInAuthenticatorConstants.LINKEDIN_V2_OAUTH_ENDPOINT;
         }
 
         return StringUtils.isNotEmpty(authorizationEP) ? authorizationEP : LinkedInAuthenticatorConstants
-                .LINKEDIN_OAUTH_ENDPOINT_V2;
+                .LINKEDIN_V2_OAUTH_ENDPOINT;
     }
 
     /**
@@ -160,11 +157,11 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
         if (authenticatorProperties != null) {
             tokenEndPoint = authenticatorProperties.get(LinkedInAuthenticatorConstants.OAUTH2_TOKEN_URL);
         } else {
-            tokenEndPoint = LinkedInAuthenticatorConstants.LINKEDIN_TOKEN_ENDPOINT_V2;
+            tokenEndPoint = LinkedInAuthenticatorConstants.LINKEDIN_V2_TOKEN_ENDPOINT;
         }
 
         return StringUtils.isNotEmpty(tokenEndPoint) ? tokenEndPoint : LinkedInAuthenticatorConstants
-                .LINKEDIN_TOKEN_ENDPOINT_V2;
+                .LINKEDIN_V2_TOKEN_ENDPOINT;
     }
 
     /**
@@ -177,11 +174,11 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
         if (authenticatorProperties != null) {
             userinfoEndpoint = authenticatorProperties.get(LinkedInAuthenticatorConstants.USERINFO_ENDPOINT);
         } else {
-            userinfoEndpoint = LinkedInAuthenticatorConstants.LINKEDIN_USERINFO_ENDPOINT_V2;
+            userinfoEndpoint = LinkedInAuthenticatorConstants.LINKEDIN_V2_USERINFO_ENDPOINT;
         }
 
         return StringUtils.isNotEmpty(userinfoEndpoint) ? userinfoEndpoint : LinkedInAuthenticatorConstants
-                .LINKEDIN_USERINFO_ENDPOINT_V2;
+                .LINKEDIN_V2_USERINFO_ENDPOINT;
     }
 
     /**
@@ -189,6 +186,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
      */
     @Override
     protected boolean requiredIDToken(Map<String, String> authenticatorProperties) {
+
         return false;
     }
 
@@ -197,7 +195,8 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
      */
     @Override
     public String getFriendlyName() {
-        return LinkedInAuthenticatorConstants.LINKEDIN_CONNECTOR_FRIENDLY_NAME;
+
+        return LinkedInAuthenticatorConstants.LINKEDIN_OIDC_CONNECTOR_FRIENDLY_NAME;
     }
 
     /**
@@ -205,8 +204,10 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
      */
     @Override
     public String getName() {
-        return LinkedInAuthenticatorConstants.LINKEDIN_CONNECTOR_NAME;
+
+        return LinkedInAuthenticatorConstants.LINKEDIN_OIDC_CONNECTOR_NAME;
     }
+
 
     /**
      * Get Configuration Properties.
@@ -245,7 +246,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
     }
 
     /**
-     * This is override because of query string values hard coded and input
+     * This is overridden because query string values are hard coded and input
      * values validations are not required.
      *
      * @param request  the http request
@@ -294,7 +295,7 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
     }
 
     /**
-     * This method are overridden for extra claim request to LinkedIn end-point.
+     * This method is overridden for extra claim request to LinkedIn end-point.
      *
      * @param request  the http request
      * @param response the http response
@@ -400,28 +401,12 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
     }
 
     /**
-     * Get user information using access token.
-     *
-     * @param token Access token
-     * @return mapped user information
-     */
-    protected Map<String, Object> getUserClaims(OAuthClientResponse token) throws AuthenticationFailedException {
-
-        try {
-            String json = sendRequest(LinkedInAuthenticatorConstants.LINKEDIN_USERINFO_ENDPOINT_V2,
-                    token.getParam(LinkedInAuthenticatorConstants.ACCESS_TOKEN));
-            return JSONUtils.parseJSON(json);
-        } catch (IOException e) {
-            throw new AuthenticationFailedException("Authentication Failed while request user info ", e);
-        }
-    }
-
-    /**
      * Get the Linkedin specific claim dialect URI.
      * @return Claim dialect URI.
      */
     @Override
     public String getClaimDialectURI() {
+
         return LinkedInAuthenticatorConstants.CLAIM_DIALECT_URI;
     }
 
@@ -430,37 +415,21 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
             String> authenticatorProperties) {
 
         HashMap<ClaimMapping, String> claims = new HashMap<>();
+
+        if (token == null) {
+            return claims;
+        }
         try {
             String accessToken = token.getParam(LinkedInAuthenticatorConstants.ACCESS_TOKEN);
 
-            // Retrieve user's email address.
-            String emailEndpointURL = this.getEmailEndpointURL(authenticatorProperties);
-            String emailJSON = this.sendRequest(emailEndpointURL, accessToken);
-            Map<String, Object> emailJSONObject = JSONUtils.parseJSON(emailJSON);
-
-            // Following will be the JSON response from the email endpoint.
-            // {
-            //   "handle": "urn:li:emailAddress:3775708763",
-            //   "handle~": {
-            //     "emailAddress": "hsimpson@linkedin.com"
-            //   }
-            // }
-            JSONObject elements = (JSONObject)((Object[])emailJSONObject
-                    .get(LinkedInAuthenticatorConstants.ELEMENTS_ATTRIBUTE))[0];
-            JSONObject handle = elements.getJSONObject(LinkedInAuthenticatorConstants.HANDLE_ATTRIBUTE);
-
-            ClaimMapping emailClaimMapping = ClaimMapping.build(LinkedInAuthenticatorConstants.EMAIL_ADDRESS_CLAIM,
-                    LinkedInAuthenticatorConstants.EMAIL_ADDRESS_CLAIM, null, false);
-            claims.put(emailClaimMapping, handle.getString(LinkedInAuthenticatorConstants.EMAIL_ADDRESS_ATTRIBUTE));
-
-            // Retrieve user's other attributes.
             String userInfoEndpoint = this.getUserInfoEndpoint(token, authenticatorProperties);
             String json = this.sendRequest(userInfoEndpoint, accessToken);
             if (StringUtils.isBlank(json)) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Empty JSON response from the IDP user info endpoint. Continuing without user claims.");
+                    log.debug("Empty JSON response from user info endpoint. Unable to fetch user claims." +
+                            " Proceeding without user claims");
                 }
-                return Collections.emptyMap();
+                return claims;
             }
 
             Map<String, Object> jsonObject = JSONUtils.parseJSON(json);
@@ -479,24 +448,5 @@ public class LinkedInAuthenticator extends OpenIDConnectAuthenticator implements
             log.error("Error occurred while accessing user info endpoint", e);
         }
         return claims;
-    }
-
-    /**
-     * Retrieve the LinkedIn email endpoint from the properties or use the default one.
-     * @param authenticatorProperties Authenticator properties.
-     * @return LinkedIn email endpoint URL.
-     * @since 2.0.0
-     */
-    public String getEmailEndpointURL(Map<String, String> authenticatorProperties) {
-
-        String emailEndpoint;
-        if (authenticatorProperties != null) {
-            emailEndpoint = authenticatorProperties.get(LinkedInAuthenticatorConstants.EMAIL_ENDPOINT);
-        } else {
-            emailEndpoint = LinkedInAuthenticatorConstants.LINKEDIN_EMAIL_ENDPOINT;
-        }
-
-        return StringUtils.isNotEmpty(emailEndpoint) ? emailEndpoint : LinkedInAuthenticatorConstants
-                .LINKEDIN_EMAIL_ENDPOINT;
     }
 }

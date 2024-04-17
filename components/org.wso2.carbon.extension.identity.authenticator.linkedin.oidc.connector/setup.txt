@@ -1,0 +1,19 @@
+Product: WSO2 IS authenticator for linkedIn OIDC
+Pre-requisites:
+
+- Maven 3.x
+- Java 1.6 or above
+
+Tested Platform: 
+
+- UBUNTU 14.04
+- WSO2 IS 5.10.0
+- Java 1.8
+
+Do the following:
+
+1. Navigate to identity-outbound-auth-linkedIn/components/org.wso2.carbon.extension.identity.authenticator.linkedin.oidc.connector and build.
+
+2. Place org.wso2.carbon.identity.authenticator.linkedin.oidc.connector jar into <IS_HOME>/repository/components/dropins.
+
+3. Start the IS server and create Identity provider and service provider in IS via the IS console.
