@@ -22,7 +22,8 @@ Follow the steps given below to set this up.
 1. Place the authenticator.jar file into the 
 `<IS_HOME>/repository/components/dropins` directory. 
 You can download the .jar file 
-(`org.wso2.carbon.extension.identity.authenticator.linkedin.connector-x.x.x`) 
+(`org.wso2.carbon.extension.identity.authenticator.linkedin.connector-x.x.x` 
+for OIDC apps : `org.wso2.carbon.extension.identity.authenticator.linkedin.oidc.connector-x.x.x` ) 
 from the [WSO2 Store](https://store.wso2.com/store/assets/isconnector/list?q=%22_default%22%3A%22LinkedIn%22). 
 Next, start or restart the WSO2 Identity Server. 
     > :information_source: If you want to upgrade the LinkedIn (.jar) in your existing Identity Server pack, 
@@ -84,7 +85,8 @@ as an administrator.
     > :information_source: In cryptography, a public key certificate, also known as a digital certificate or identity
                                                                                                                                                                                                                                                                                                                                                                                                                                                     > certificate, is an electronic document used to prove the ownership of a public key.
    
-5. Navigate to the **LinkedIn Authenticator Configurations** under **Federated Authenticators**.
+5. Navigate to the **LinkedIn Authenticator Configurations** under **Federated Authenticators**. (If you have configured 
+  an OIDC LinkedIn app use **LinkedInOIDC Authenticator Configurations** under **Federated Authenticators**)
 
 6. Enter the IdP related details as follows.
 
@@ -129,8 +131,12 @@ as an administrator.
     </tr>
     </tbody>
     </table>
-    
+   
+    LinkedIn Authenticator Configurations :
     ![is-590-add-idp-page](img/is-590-add-idp-page.png)
+
+    LinkedInOIDC Authenticator Configurations :
+    ![is-590-add-idp-page](img/is-590-add-oidc-idp-page.png)
     
 7. Click on **Register**.
 
@@ -237,7 +243,9 @@ that you are working on.
     </tr>
     <tr class="even">
     <td>**External Claim URI**</td>
-    <td>http://wso2.org/linkedin/claims/localizedLastName</td>
+    <td>http://wso2.org/linkedin/claims/localizedLastName<br>
+    OIDC Connector : http://wso2.org/linkedin/claims/family_name
+    </td>
     </tr>
     <tr class="odd">
     <td>**Mapped Local Claim**</td>
@@ -263,7 +271,9 @@ following claim mapping information.
     </tr>
     <tr class="even">
     <td>**External Claim URI**</td>
-    <td>http://wso2.org/linkedin/claims/localizedFirstName</td>
+    <td>http://wso2.org/linkedin/claims/localizedFirstName<br>
+    OIDC Connector : http://wso2.org/linkedin/claims/given_name
+    </td>
     </tr>
     <tr class="odd">
     <td>**Mapped Local Claim**</td>
@@ -282,7 +292,9 @@ following claim mapping information.
     </tr>
     <tr class="even">
     <td>**External Claim URI**</td>
-    <td>http://wso2.org/linkedin/claims/emailAddress</td>
+    <td>http://wso2.org/linkedin/claims/emailAddress<br> 
+    OIDC Connector : http://wso2.org/linkedin/claims/email
+    </td>
     </tr>
     <tr class="odd">
     <td>**Mapped Local Claim**</td>
