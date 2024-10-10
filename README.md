@@ -8,4 +8,4 @@ With WSO2 IS, there are lot of provisioning capabilities available. There are 3 
 
 ### LinkedIn Outbound Connector
 
-Refer [Configuring LinkedIn Authenticator](docs/README.md)
+Refer [Configuring LinkedIn Authenticator](docs/is7/README.md)

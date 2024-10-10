@@ -4,8 +4,6 @@ This page provides instructions on how to configure the LinkedIn
 authenticator and the WSO2 Identity Server using a sample app to 
 demonstrate authentication.
 
-> For WSO2 Identity Server 7.0.0 and later versions, please refer to the [updated documentation](is7/README.md) for the latest configuration process.
-
 > This authenticator has been tested with LinkedIn API version 2.0. The LinkedIn Authenticator is supported from WSO2 
 >Identity Server 5.9.0 onwards.
 

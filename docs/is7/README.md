@@ -2,6 +2,8 @@
 
 This guide provides instructions on how to configure the LinkedIn authenticator and add LinkedIn login to your applications using WSO2 Identity Server, enabling users to log in with their LinkedIn accounts.
 
+> For WSO2 Identity Server versions prior to 7.0.0, please refer this [documentation](../README.md) for the configuration process applicable to those earlier releases.
+
 Follow the steps given below to set this up.
 
 ## Configure the LinkedIn Authenticator
@@ -14,7 +16,7 @@ Follow the steps given below to set this up.
 
 3. Start or restart the WSO2 Identity Server. 
 
-> If you want to upgrade the LinkedIn (.jar) in your existing Identity Server pack, please refer [upgrade instructions](https://docs.wso2.com/display/ISCONNECTORS/Upgrading+an+Authenticator).
+> If you want to upgrade the LinkedIn (.jar) in your existing Identity Server pack, please refer [upgrade instructions](https://wso2docs.atlassian.net/wiki/spaces/ISCONNECTORS/pages/35292172/Upgrading+an+Authenticator).
 
 ## Register WSO2 Identity Server on LinkedIn
 
@@ -24,7 +26,7 @@ Follow the steps given below to set this up.
     * App Name and Company details. The company should have a LinkedIn page.
     * Upload an image that you wish to use as the company logo.
     * Select the checkbox to agree to the LinkedIn terms and conditions.
-3. Click on **Create App**. You will be redirect to a page with **Settings** for the created application. 
+3. Click on **Create App**. You will be redirected to the  **Settings** page of the created application.
 
 ![linkedin-app-create-page](../img/linkedin-app-create-page.png)
 
@@ -116,6 +118,6 @@ Follow the steps given below.
 
 3. On the WSO2 Identity Server login page, Sign in with LinkedIn.
 
- ![linkedin-sign-in-page](img/linkedin-sign-in-page.png)
+<img src="img/linkedin-sign-in-page.png" alt="linkedin-sign-in-page" width="300">
 
 4. Log in to LinkedIn with an existing user account.
