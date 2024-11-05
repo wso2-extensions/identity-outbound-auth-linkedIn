@@ -9,7 +9,6 @@ Follow the steps given below to set this up.
 ## Configure the LinkedIn Authenticator
 
 1. Download the .jar file from the [WSO2 Store](https://store.wso2.com/connector/identity-outbound-auth-linkedIn)
-    - **OAuth 2.0** : `org.wso2.carbon.extension.identity.authenticator.linkedin.connector-x.x.x` 
     - **OpenID Connect (V2)** : `org.wso2.carbon.extension.identity.authenticator.linkedin.oidc.connector-x.x.x`
 2. Place the authenticator.jar file into the 
 `<IS_HOME>/repository/components/dropins` directory. 
@@ -57,7 +56,7 @@ Next, let's register the LinkedIn IdP in WSO2 Identity Server.
 
 4. Go to **Settings** tab and click **New Authenticator**.
 
-5. Select the **LinkedIn** (OAuth 2.0) / **LinkedInOIDC** (OpenID Connect) authenticator you want to add and click Next.
+5. Select the **LinkedInOIDC** (OpenID Connect) authenticator and click Next.
 
 ![linkedin-select-authenticator](img/linkedin-select-authenticator.png)
 
