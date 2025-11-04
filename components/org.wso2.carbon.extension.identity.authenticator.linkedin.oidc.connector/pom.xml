@@ -144,6 +144,7 @@
                             org.osgi.service.component.*,
                             org.wso2.carbon.identity.application.authentication.framework.*;version="${carbon.identity.package.import.version.range}",
                             org.wso2.carbon.identity.application.common.*;version="${carbon.identity.package.import.version.range}",
+                            org.wso2.carbon.identity.core.util;version="${carbon.identity.package.import.version.range}",
                             javax.servlet,
                             javax.servlet.http,
                             org.apache.oltu.oauth2.*;version="${oltu.package.import.version.range}",
