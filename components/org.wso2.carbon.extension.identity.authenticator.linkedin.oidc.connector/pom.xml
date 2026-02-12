@@ -145,8 +145,8 @@
                             org.wso2.carbon.identity.application.authentication.framework.*;version="${carbon.identity.package.import.version.range}",
                             org.wso2.carbon.identity.application.common.*;version="${carbon.identity.package.import.version.range}",
                             org.wso2.carbon.identity.core.util;version="${carbon.identity.package.import.version.range}",
-                            javax.servlet,
-                            javax.servlet.http,
+                            javax.servlet;version="${javax.servlet.import.version.range}",
+                            javax.servlet.http;version="${javax.servlet.import.version.range}",
                             org.apache.oltu.oauth2.*;version="${oltu.package.import.version.range}",
                             *;resolution:=optional
                         </Import-Package>

@@ -156,6 +156,16 @@
                     <extensions>true</extensions>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.1</version>
+                    <configuration>
+                        <encoding>UTF-8</encoding>
+                        <source>21</source>
+                        <target>21</target>
+                    </configuration>
+                </plugin>
+                <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
                     <version>${build.helper.maven.plugin.version}</version>
@@ -240,9 +250,10 @@
         <org.apache.commons.logging.version>1.0.4</org.apache.commons.logging.version>
         <apache.felix.scr.ds.annotations.version>1.2.4</apache.felix.scr.ds.annotations.version>
 
-        <maven.bundle.plugin.version>3.2.0</maven.bundle.plugin.version>
+        <maven.bundle.plugin.version>5.1.9</maven.bundle.plugin.version>
 
         <carbon.identity.package.import.version.range>[5.0.0,8.0.0)</carbon.identity.package.import.version.range>
+        <javax.servlet.import.version.range>[3.1.0,4.0.0)</javax.servlet.import.version.range>
     </properties>
 </project>
 
